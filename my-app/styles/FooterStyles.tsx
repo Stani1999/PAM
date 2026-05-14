@@ -1,8 +1,8 @@
 // Lab I.10.3.
 import { StyleSheet } from 'react-native';
 
-export const footerStyles = StyleSheet.create({
-  footerContainer: {
+export const FooterStyles = StyleSheet.create({
+  FooterContainer: {
     width: '100%',
     padding: 15,
     backgroundColor: '#b18f5b',
@@ -10,7 +10,7 @@ export const footerStyles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#000',
   },
-  footerText: {
+  FooterText: {
     fontSize: 12,
     color: '#333',
   },

@@ -1,10 +1,18 @@
 // Lab I.9.2.
 import { Text, View } from 'react-native';
+// <II.1.1.> 
+import { styles } from '@/styles/HeaderStyles';
 
-export function Header() {
+type HeaderProps = {
+  title: string;
+};
+
+export function Header({ title }: HeaderProps) {
   return (
     <View>
-      <Text style={{ fontSize: 24 }}>Student Application</Text>
+      {/* <II.1.1.> Before: <Text style={{ fontSize: 24 }}>Student Application</Text>*/}
+      <Text style={styles.title}>{title}</Text>
     </View>
   );
+// </II.1.1.>
 }
