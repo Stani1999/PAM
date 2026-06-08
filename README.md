@@ -421,7 +421,7 @@ git commit -m "Lab 1 - RN basics"
 ### I.10.1. Change the background color of application
 
 ```bash
-mkdir -p styles       # For all styles in the project
+mkdir -p styles             # For all styles in the project
 touch styles/indexStyles.ts # For main application styles
 ```
 
@@ -546,6 +546,7 @@ export default function App() {
 
 ```bash
 npm start
+a # to open Android emulator
 ```
 
 * If application wasn't turned off, it should automatically reload
@@ -564,16 +565,16 @@ git commit -m "Lab 1 - RN basics+"
 ### II.1.0. Create this structure in main directory
 
 ```bash
-mkdir -p components             # components      (I.9.3.)
-touch components/Header.tsx     # ├── Header.tsx  (I.9.3.)
-touch components/Footer.tsx     # ├── Footer.tsx  (I.10.3.)
-touch components/ListItem.tsx   # └── ListItem.tsx (II.1.2.)
-mkdir -p screens                # screens         (II.1.0.)
-mkdir -p styles                 # styles          (I.10.2.)
-touch styles/indexStyles.tsx    # ├── indexStyles.tsx (I.10.2.)
-touch styles/FooterStyles.tsx   # ├── FooterStyles.tsx (I.10.3.)
-touch styles/HeaderStyles.tsx   # ├── HeaderStyles.tsx (II.1.1.)
-touch styles/ListItemStyles.tsx # └── ListItemStyles.tsx (II.1.2.)
+mkdir -p components             # components              (I.9.3.)
+touch components/Header.tsx     # ├── Header.tsx          (I.9.3.)
+touch components/Footer.tsx     # ├── Footer.tsx          (I.10.3.)
+touch components/ListItem.tsx   # └── ListItem.tsx        (II.1.2.)
+mkdir -p screens                # screens                 (II.1.0.)
+mkdir -p styles                 # styles                  (I.10.1.)
+touch styles/indexStyles.tsx    # ├── indexStyles.tsx     (I.10.2.)
+touch styles/FooterStyles.tsx   # ├── FooterStyles.tsx    (I.10.3.)
+touch styles/HeaderStyles.tsx   # ├── HeaderStyles.tsx    (II.1.1.)
+touch styles/ListItemStyles.tsx # └── ListItemStyles.tsx  (II.1.2.)
 ```
 
 ### II.1.1. Refactor in `components`
@@ -822,4 +823,414 @@ export default function ListItem({ ... isHighlighted }: ListItemProps) { // add 
     { id: 8, title: "Hackathon Kickoff", description: "19:00", location: "E5", isHighlighted: true },
   ];
   ...
+```
+
+## **Lab III: Navigation and Multi-screen Application (React Navigation + TypeScript)**
+
+## III.1. Installation of React Navigation
+
+### III.1.1. Install the core package
+
+```bash
+npm install @react-navigation/native
+```
+
+### III.1.2. Install Expo dependencies
+
+```bash
+npx expo install react-native-screens react-native-safe-area-context
+```
+
+### III.1.3. Install Stack Navigator
+
+```bash
+npm install @react-navigation/native-stack
+```
+
+## III.2. New Project Structure
+
+### III.2.1. Create screens directory and files
+
+```bash
+mkdir -p screens                    # screens                     (II.1.0.)
+touch screens/HomeScreen.tsx        # ├── HomeScreen.tsx          (III.2.2.)
+touch screens/DetailScreen.tsx      # └── DetailScreen.tsx        (III.2.3.)
+mkdir -p styles                     # styles                      (I.10.1.)
+touch styles/HomeScreenStyles.tsx   # ├── HomeScreenStyles.tsx    (III.2.2.)
+touch styles/DetailScreenStyles.tsx # └── DetailScreenStyles.tsx  (III.2.3.)
+mkdir -p types                      # types                       (III.4.)
+touch types/Navigation.ts           # └── Navigation.ts           (III.4.)
+```
+
+### III.2.2. Create the first screen — HomeScreen
+
+[`styles/HomeScreenStyles.tsx`](./my-app/styles/HomeScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+});
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+import { View, Text, Button } from "react-native";
+import { styles } from "../styles/HomeScreenStyles";
+
+export default function HomeScreen({ navigation }
+  : any) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Events List</Text>
+
+      <Button
+        title="Go to details"
+        onPress={() =>
+          navigation.navigate("Details", {
+            title: "React Lecture",
+            description: "Room GM-46, 9:45",
+          })
+        }
+      />
+    </View>
+  );
+}
+```
+
+### III.2.3. Create DetailScreen
+
+[`styles/DetailScreenStyles.tsx`](./my-app/styles/DetailScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+});
+```
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+import { View, Text } from "react-native";
+import { styles } from "../styles/DetailScreenStyles";
+
+export default function DetailsScreen({ route }: any) {
+  const { title, description } = route.params;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text>{description}</Text>
+    </View>
+  );
+}
+```
+
+## III.3. Configuring Stack Navigator
+
+### III.3.1. Open App.tsx (or [`index.tsx`](./my-app/app/(tabs)/index.tsx)) and replace the content with the following code
+
+[`app/(tabs)/index.tsx`](./my-app//app/(tabs)/index.tsx)
+
+```tsx
+import { NavigationContainer } from "@react-navigation/native"; // Ignore "Is never used"
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import HomeScreen from "../../screens/HomeScreen";
+import DetailsScreen from "../../screens/DetailScreen";
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+  );
+}
+```
+
+### III.3.2. Test the application
+
+```bash
+npm start
+a # to open Android emulator
+```
+
+* If application wasn't turned off, it should automatically reload
+* After clicking "Go to details" button, it should navigate to the details screen with the title and description displayed.
+
+### III.3.3. Problem with `any`
+
+* For now, Routing is untyped
+* It's a bad practice
+* In TypeScript, it is necessary to explicitly define the parameters for each screen
+
+## III.4. Typing routing
+
+### III.4.1. Add types for navigation in `types/Navigation.ts` (insted of in `index.tsx`)
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  Home: undefined;
+  Details: {
+    title: string;
+    description: string;
+  };
+};
+```
+
+### III.4.2. Use the defined types in `App.tsx` (or [`index.tsx`](./my-app/app/(tabs)/index.tsx))
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+import { RootStackParamList } from "../../types/Navigation";
+...
+const Stack = createNativeStackNavigator<RootStackParamList>(); // () -> <RootStackParamList>()
+...
+```
+
+## III.5. Typing navigation and route
+
+### III.5.1. Type `navigation` in `HomeScreen`
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+// Add imports for NativeStackNavigationProp and RootStackParamList
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/Navigation";
+...
+
+// Add type definition
+type HomeScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
+};
+
+export default function HomeScreen({ navigation }: HomeScreenProps) { // any -> HomeScreenProps
+  ...
+}
+```
+
+### III.5.2. Type `route` in `DetailScreen`
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+// Add imports for RouteProp and RootStackParamList
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../types/Navigation";
+...
+// Add type definitions
+type DetailsScreenRouteProp = RouteProp<RootStackParamList, "Details">;
+
+// Add type for props
+type DetailsScreenProps = {
+  route: DetailsScreenRouteProp;
+};
+
+export default function DetailsScreen({ route }: DetailsScreenProps) { // any -> DetailsScreenProps
+  ...
+```
+
+## III.6. Practical and homework tasks
+
+### III.6.1. Add `eventId: number` to the route params
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```ts
+export type RootStackParamList = {
+  ...
+  Details: {
+    eventId: number; // Add eventId
+    ...
+  };
+};
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+...
+export default function HomeScreen({ navigation }: HomeScreenProps) {
+  return (
+    <View style={styles.container}>
+      ...
+      <Button
+        title="Go to details"
+        onPress={() =>
+          navigation.navigate("Details", {
+            ...
+            eventId: 1, // <Add eventId to integrate code>
+            ...
+    </View>
+```
+
+### III.6.2. Display `eventId` in `DetailsScreen`
+
+[`styles/DetailScreenStyles.tsx`](./my-app/styles/DetailScreenStyles.tsx)
+
+```tsx
+export const styles = StyleSheet.create({
+  eventId: {
+    fontSize: 16,
+    color: "#666",
+    marginBottom: 10,
+  },
+  ...
+});
+```
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+...
+export default function DetailsScreen({ route }: DetailsScreenProps) {
+  const { eventId, ... } = route.params; // extract eventId
+
+  return (
+    <View style={styles.container}>
+      ...
+      <Text style={styles.eventId}>Event ID: {eventId}</Text> {/* <Add> */}
+      ...
+    </View>
+  );
+}
+```
+
+### III. 6.3. Add a second button passing different data
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+    ...
+    <View style={styles.container}>
+      ...
+
+      {/* Add second button */}
+      <Button
+        title="Go to React Lab"
+        onPress={() =>
+          navigation.navigate("Details", {
+            eventId: 2,
+            title: "React Lab",
+            description: "Room 101, 11:30",
+          })
+        }
+      />
+    </View>
+  );
+}
+```
+
+### III.6.4. Change `Details` screen title dynamically
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+      ...
+      <Stack.Navigator>
+        ...
+        {/* Replace simple Screen definition with dynamic title option */}
+        <Stack.Screen 
+          name="Details" 
+          component={DetailsScreen} 
+          options={({ route }) => ({
+            title: route.params.title,
+          })}
+        />
+      </Stack.Navigator>
+...
+```
+
+### III.6.5. Add list of 5 events (Buttons?)
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+    ...
+    <View style={styles.container}>
+      ...
+      {/* Add 5 more buttons (list?) for the homework: */}
+      <Button
+        title="Go to Lecture: React"
+        onPress={() =>
+          navigation.navigate("Details", {
+            eventId: 3,
+            title: "Lecture: React",
+            description: "10:00, A1",
+          })
+        }
+      />
+
+      <Button
+        title="Go to Workshop: AI"
+        onPress={() =>
+          navigation.navigate("Details", {
+            eventId: 4,
+            title: "Workshop: AI",
+            description: "12:00, B2",
+          })
+        }
+      />
+
+      <Button
+        title="Go to Meeting: Coding Club"
+        onPress={() =>
+          navigation.navigate("Details", {
+            eventId: 5,
+            title: "Meeting: Coding Club",
+            description: "15:00, C3",
+          })
+        }
+      />
+
+      <Button
+        title="Go to Seminar: Mobile Dev"
+        onPress={() =>
+          navigation.navigate("Details", {
+            eventId: 6,
+            title: "Seminar: Mobile Dev",
+            description: "17:00, D4",
+          })
+        }
+      />
+
+      <Button
+        title="Go to Hackathon Kickoff"
+        onPress={() =>
+          navigation.navigate("Details", {
+            eventId: 7,
+            title: "Hackathon Kickoff",
+            description: "19:00, E5",
+          })
+        }
+      />
+    </View>
+    ...
 ```
