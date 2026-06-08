@@ -1,6 +1,5 @@
 // Lab III.3.1.
 import { RootStackParamList } from "../../types/Navigation"; // <III.4.2/>
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "../../screens/HomeScreen";
@@ -12,7 +11,9 @@ export default function App() {
   
   return (
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} />
+        {/* IV.1.4. */}
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Start" }} />  
+        {/* /IV.1.4. */}
         {/* <III.6.4.> */}
         <Stack.Screen 
           name="Details" 
@@ -21,7 +22,7 @@ export default function App() {
             title: route.params.title,
           })}
         />
-        {/* <III.6.4.> */}
+        {/* /III.6.4. */}
       </Stack.Navigator>
   );
 }

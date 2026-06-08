@@ -48,7 +48,6 @@ npm start
 
 * Press `Ctrl + C`
 
-
 ## I.2. Emulator Setup (`Android Studio emulator`)
 
 ### I.2.1. Download the newest tar.gz [Android Studio](https://developer.android.com/studio?hl=en)
@@ -709,12 +708,27 @@ import { ..., ScrollView // Add ScrollView import
 
 ### II.2.1. Add field `location` to the events
 
-[`ListItem.tsx`](./my-app/components/ListItem.tsx)
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+
+```tsx
+export const styles = StyleSheet.create({
+    ...
+    // Add style for location
+    location: {
+        fontSize: 12,
+        color: "#888",
+        marginTop: 4,
+        fontStyle: "italic",
+    },
+});
+```
+
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
 
 ```tsx
 type ListItemProps = {
     ...
-    location: string; // <II.2.1./>
+    location: string; // Add location field in props
 };
 
 export default function ListItem({ title, description,
@@ -723,7 +737,7 @@ export default function ListItem({ title, description,
     return (
         <View style={styles.container}>
             ...
-            <Text>{location}</Text> {/* Add location in View */}
+            <Text style={styles.location}>{location}</Text>  {/* Add location in View */}
         </View>
     );
 }
@@ -953,7 +967,6 @@ export default function DetailsScreen({ route }: any) {
 [`app/(tabs)/index.tsx`](./my-app//app/(tabs)/index.tsx)
 
 ```tsx
-import { NavigationContainer } from "@react-navigation/native"; // Ignore "Is never used"
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "../../screens/HomeScreen";
@@ -1233,4 +1246,341 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
       />
     </View>
     ...
+```
+
+## **Lab IV: FlatList and dynamic data rendering**
+
+## IV.1. ListItem implementation
+
+### IV.1.1. Preparing the ListItem component
+
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+    ...
+    },
+    container: {
+        marginHorizontal: 12, // Add horizontal margin
+        marginVertical: 6,    // Add vertical margin
+        ...
+    },
+    title: {
+        fontSize: 18, // increase font size
+        ...
+    },
+    // Add style for description
+    description: {
+        fontSize: 14,
+        color: "#555",
+    },
+});
+```
+
+Add missing location in [`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  ...
+  Details: {
+    ...
+    location: string; // Add location
+  };
+};
+```
+
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
+
+```tsx
+import { Pressable, ... } from "react-native";                    // View -> Pressable
+...
+type ListItemProps = {
+    ...
+    onPress: () => void;
+};
+
+export default function ListItem({ 
+    ...
+    , onPress 
+}: ListItemProps) {
+    return (
+        <Pressable onPress={onPress} style={[ ...                 // View -> Pressable onPress={onPress}
+         ...]}>
+            ...
+            <Text style={styles.description}>{description}</Text> {/*Add style={styles.description}>*/} 
+        </Pressable>                                              // View -> Pressable
+    );
+}
+```
+
+### IV.1.2. Creating an events list in HomeScreen
+
+[`styles/HomeScreenStyles.tsx`](./my-app/styles/HomeScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    // Add padding and background color to the container
+    backgroundColor: "#f2f2f2",
+    paddingTop: 20,
+    ...
+  },
+  header: { // title -> header
+    //
+    fontWeight: "bold",
+    marginHorizontal: 12,
+    ...
+  },
+});
+
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+import ListItem from "../components/ListItem"; // Add import for ListItem
+import { FlatList, ... } from "react-native";  // Add import for FlatList
+...
+
+// Add type for event item
+type EventItem = {
+  eventId: number;
+  title: string;
+  description: string;
+  location: string;
+  isHighlighted: boolean;
+};
+
+// Create events array
+export default function HomeScreen({ navigation }: HomeScreenProps) {
+  const events: EventItem[] = [
+    { eventId: 1, title: "Lecture: React", description: "10:00", location: "A1", isHighlighted: true },
+    { eventId: 2, title: "Workshop: AI", description: "12:00", location: "B2", isHighlighted: false },
+    { eventId: 3, title: "Meeting: Coding Club", description: "15:00", location: "C3", isHighlighted: true },
+    { eventId: 4, title: "Seminar: Mobile Dev", description: "17:00", location: "D4", isHighlighted: false },
+    { eventId: 5, title: "Hackathon Kickoff", description: "19:00", location: "E5", isHighlighted: true },
+  ];
+
+  // Replace Buttons (list?) with FlatList
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Wydarzenia</Text>
+        <FlatList
+          data={events}
+          keyExtractor={(item) => item.eventId.toString()}
+          renderItem={({ item }) => (
+            <ListItem
+              title={item.title}
+              description={item.description}
+              location={item.location}
+              isHighlighted={item.isHighlighted}
+              onPress={() =>
+                navigation.navigate("Details", {
+                  eventId: item.eventId,
+                  title: item.title,
+                  description: item.description,
+                  location: item.location,
+                })
+              }
+            />
+          )}
+        />
+    </View> 
+  );
+}
+```
+
+### IV.1.3. Updating DetailsScreen
+
+[`styles/DetailScreenStyles.tsx`](./my-app/styles/DetailScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  ...
+  // Add padding to the container
+  container: {
+    padding: 20,
+    ...
+  },
+  // Add margin and textAlign to the title
+  title: {
+    marginBottom: 10,
+    textAlign: "center",
+    ...
+  },
+  // Add style for description
+  description: {
+    fontSize: 18,
+    textAlign: "center",
+  },
+  // Add style for location
+  location: {
+    fontSize: 16,
+    marginTop: 8,
+    color: "#888",
+  },
+});
+```
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+...
+export default function DetailsScreen({ route }: DetailsScreenProps) {
+  const { eventId, title, description, location } = route.params;       // Add location to destructuring
+
+  return (
+    <View style={styles.container}>
+    ...
+      <Text style={styles.description}>{description}</Text>             {/* Add style={styles.description */}
+      <Text style={styles.location}>{location}</Text>                   {/* Add location text with style */}
+    </View>
+  );
+}
+```
+
+### IV.1.4. Update navigation options in `index.tsx`
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+      <Stack.Navigator>
+        {/* Add options={{ title: "Start" }} */}
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Start" }} />
+      </Stack.Navigator>
+...
+```
+
+### IV.2. Practice tasks
+
+### IV.2.1. Add field location to all of the events
+
+Not needed, already added in the code above by integrating with previous labs.
+
+### IV.2.2. Extend the `ListItem` to display the location
+
+Already done in [II.2.1.](#ii21-add-field-location-to-the-events)
+
+### IV.2.3. Pass location to DetailsScreen
+
+Not needed, already done in the previous steps by integrating with earlier labs.
+
+### IV.2.4. Add minimum 8 events
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+  const events: EventItem[] = [
+    ...
+    { eventId: 6, title: "Lab: Database Design", description: "09:00", location: "F6", isHighlighted: false },
+    { eventId: 7, title: "Lecture: TypeScript", description: "11:00", location: "G7", isHighlighted: true },
+    { eventId: 8, title: "Workshop: UI/UX", description: "13:00", location: "H8", isHighlighted: false },
+    { eventId: 9, title: "Networking Session", description: "15:30", location: "I9", isHighlighted: true },
+    { eventId: 10, title: "Seminar: Cloud Services", description: "17:30", location: "J0", isHighlighted: false },
+    { eventId: 11, title: "Code Review Panel", description: "19:00", location: "K1", isHighlighted: true },
+    { eventId: 12, title: "Workshop: Testing", description: "09:30", location: "L2", isHighlighted: false },
+    { eventId: 13, title: "Closing Ceremony", description: "20:00", location: "Main Hall", isHighlighted: true },
+    { eventId: 14, title: "After Party", description: "22:00", location: "Village", isHighlighted: true },
+  ];
+```
+
+### IV.2.5. Change ListItem style to look more like a card
+
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+
+```tsx
+    ...
+    container: {
+        ...
+        borderRadius: 16,  //  8 -> 16
+        elevation: 5,      //  3 -> 5
+        // Add shadow styles
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 10,
+    },
+      ...
+```
+
+## IV.3. Expanding DetailsScreen with time
+
+### IV.3.1. Update types types to include the time parameter
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  ...
+  Details: {
+    ...
+    time: string;
+  };
+};
+```
+
+### IV.3.2. Update the EventItem type, mock data, and navigation call
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+...
+// Add time field to the EventItem type
+type EventItem = {
+  ...
+  time: string;
+};
+...
+  // Add time field to all events 
+  const events: EventItem[] = [
+    { ... , time: "10:00" },
+    { ... , time: "12:00" },
+    ...
+  ];
+...           // Add time to navigation parameters
+              navigation.navigate("Details", {
+                ...
+                time: item.time,
+              })
+...
+```
+
+### IV.3.3. Add text styling for the time
+
+[`styles/DetailScreenStyles.tsx`](./my-app/styles/DetailScreenStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  time: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 8,
+  },
+});
+```
+
+### IV.3.4. Extract the time from parameters and render it on the screen
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+...
+export default function DetailsScreen({ route }: DetailsScreenProps) {
+  const { ..., time } = route.params;
+
+  return (
+    <View style={styles.container}>
+      ...
+      <Text style={styles.time}>Time: {time}</Text>
+      ...
+    </View>
+  );
+}
 ```
