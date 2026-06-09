@@ -35,7 +35,6 @@ export const styles = StyleSheet.create({
   },
   // </IV.1.3.>
 
-
   // <IV.3.3.>
   time: {
     fontSize: 16,
@@ -43,4 +42,23 @@ export const styles = StyleSheet.create({
     marginTop: 8,
   },
   // </IV.3.3.>
+
+  // <V.2.6.>
+  date: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 4,
+    color: "#444",
+  },
+  // </V.2.6.>
+
+  // <V.3.5.>
+  category: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#007BFF",
+    textTransform: "uppercase",
+    marginBottom: 10,
+    },
+    // </V.3.5.>
 });

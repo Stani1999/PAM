@@ -420,8 +420,8 @@ git commit -m "Lab 1 - RN basics"
 ### I.10.1. Change the background color of application
 
 ```bash
-mkdir -p styles             # For all styles in the project
-touch styles/indexStyles.ts # For main application styles
+mkdir -p styles             # styles                      (I.10.1.)
+touch styles/indexStyles.ts # └── indexStyles.ts          (I.10.1.)
 ```
 
 * Move the `styles` object from [`index.tsx`](./my-app/app/(tabs)/index.tsx) to [`styles/indexStyles.ts`](./my-app/styles/indexStyles.ts)
@@ -564,7 +564,7 @@ git commit -m "Lab 1 - RN basics+"
 ### II.1.0. Create this structure in main directory
 
 ```bash
-mkdir -p components             # components              (I.9.3.)
+mkdir -p components             # components              
 touch components/Header.tsx     # ├── Header.tsx          (I.9.3.)
 touch components/Footer.tsx     # ├── Footer.tsx          (I.10.3.)
 touch components/ListItem.tsx   # └── ListItem.tsx        (II.1.2.)
@@ -578,7 +578,7 @@ touch styles/ListItemStyles.tsx # └── ListItemStyles.tsx  (II.1.2.)
 
 ### II.1.1. Refactor in `components`
 
-[`HeaderStyles.tsx`](./my-app/styles/HeaderStyles.tsx)
+[`/styles/HeaderStyles.tsx`](./my-app/styles/HeaderStyles.tsx)
 
 ```tsx
 import { StyleSheet } from 'react-native';
@@ -596,7 +596,7 @@ export const styles = StyleSheet.create({
 });
 ```
 
-[`Header`](./my-app/components/Header.tsx)
+[`components/Header`](./my-app/components/Header.tsx)
 
 ```tsx
 ...
@@ -616,7 +616,7 @@ export default function Header({ title }: HeaderProps) // add props in () {
   ...
 ```
 
-[`index.tsx`](./my-app/app/(tabs)/index.tsx)
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
 ```tsx
 ...
@@ -631,7 +631,7 @@ export default function Header({ title }: HeaderProps) // add props in () {
 
 ### II.1.2. Create new component `ListItem`
 
-[`ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
 
 ```tsx
 import { StyleSheet } from "react-native";
@@ -651,7 +651,7 @@ export const styles = StyleSheet.create({
 });
 ```
 
-[`ListItem.tsx`](./my-app/components/ListItem.tsx)
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
 
 ```tsx
 import { View, Text } from "react-native";
@@ -674,7 +674,7 @@ export default function ListItem({ title, description }: ListItemProps) {
 
 ### II.1.3. Rendering many elements
 
-[`index.tsx`](./my-app/app/(tabs)/index.tsx)
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
 ```tsx
 import ListItem from '@/components/ListItem';
@@ -737,7 +737,7 @@ export default function ListItem({ title, description,
     return (
         <View style={styles.container}>
             ...
-            <Text style={styles.location}>{location}</Text>  {/* Add location in View */}
+            <Text style={styles.location}>{location}{/* Add location in View */}</Text>
         </View>
     );
 }
@@ -745,7 +745,7 @@ export default function ListItem({ title, description,
 
 ### II. 2.2. Modify ListItem to display location
 
-[`index.tsx`](./my-app/app/(tabs)/index.tsx)
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
 ```tsx
 import { ... ScrollView } from 'react-native'; // add ScrollView import
@@ -775,7 +775,7 @@ import { ... ScrollView } from 'react-native'; // add ScrollView import
 
 ### II.2.3. Add props `isHighlighted: boolean` and if `true -> background change color`
 
-[`ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
 
 ```tsx
 export const styles = StyleSheet.create({
@@ -786,7 +786,7 @@ export const styles = StyleSheet.create({
 });
 ```
 
-[`ListItem.tsx`](./my-app/components/ListItem.tsx)
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
 
 ```tsx
 type ListItemProps = {
@@ -801,9 +801,10 @@ export default function ListItem({ ... isHighlighted }: ListItemProps) { // add 
             ...
         </View>
     );
+}
 ```
 
-[`index.tsx`](./my-app/app/(tabs)/index.tsx)
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
 ```tsx
   // Add isHighlighted field to events
@@ -824,7 +825,7 @@ export default function ListItem({ ... isHighlighted }: ListItemProps) { // add 
 
 ### II.2.4. Add more elements to the list (min. 5)
 
-[`index.tsx`](./my-app/app/(tabs)/index.tsx)
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
 ```tsx
   ...
@@ -872,7 +873,7 @@ touch screens/DetailScreen.tsx      # └── DetailScreen.tsx        (III.2.3
 mkdir -p styles                     # styles                      (I.10.1.)
 touch styles/HomeScreenStyles.tsx   # ├── HomeScreenStyles.tsx    (III.2.2.)
 touch styles/DetailScreenStyles.tsx # └── DetailScreenStyles.tsx  (III.2.3.)
-mkdir -p types                      # types                       (III.4.)
+mkdir -p types                      # types                       (III.2.1.)
 touch types/Navigation.ts           # └── Navigation.ts           (III.4.)
 ```
 
@@ -1129,7 +1130,7 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
   return (
     <View style={styles.container}>
       ...
-      <Text style={styles.eventId}>Event ID: {eventId}</Text> {/* <Add> */}
+      <Text style={styles.eventId}>Event ID: {eventId}{/* <Add> eventId */}</Text> 
       ...
     </View>
   );
@@ -1308,7 +1309,7 @@ export default function ListItem({
         <Pressable onPress={onPress} style={[ ...                 // View -> Pressable onPress={onPress}
          ...]}>
             ...
-            <Text style={styles.description}>{description}</Text> {/*Add style={styles.description}>*/} 
+            <Text style={styles.description}>{description}{/*Add style={styles.description}>*/}</Text>  
         </Pressable>                                              // View -> Pressable
     );
 }
@@ -1367,7 +1368,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   // Replace Buttons (list?) with FlatList
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Wydarzenia</Text>
+      <Text style={styles.header}>Events</Text>
         <FlatList
           data={events}
           keyExtractor={(item) => item.eventId.toString()}
@@ -1437,8 +1438,8 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
   return (
     <View style={styles.container}>
     ...
-      <Text style={styles.description}>{description}</Text>             {/* Add style={styles.description */}
-      <Text style={styles.location}>{location}</Text>                   {/* Add location text with style */}
+      <Text style={styles.description}>{description}{/* Add style={styles.description */}</Text>             
+      <Text style={styles.location}>{location}{/* Add location text with style */}</Text>
     </View>
   );
 }
@@ -1500,10 +1501,7 @@ Not needed, already done in the previous steps by integrating with earlier labs.
         borderRadius: 16,  //  8 -> 16
         elevation: 5,      //  3 -> 5
         // Add shadow styles
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.15,
-        shadowRadius: 10,
+        boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.15)",
     },
       ...
 ```
@@ -1524,7 +1522,7 @@ export type RootStackParamList = {
 };
 ```
 
-### IV.3.2. Update the EventItem type, mock data, and navigation call
+### IV.3.2. Update the EventItem type, data, and navigation call
 
 [`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
 
@@ -1579,6 +1577,442 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
     <View style={styles.container}>
       ...
       <Text style={styles.time}>Time: {time}</Text>
+      ...
+    </View>
+  );
+}
+```
+
+### VI.3.5. Optional - Add time to the ListItem component and render it on the card
+
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+    ...
+    time: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "#333",
+        marginBottom: 4,
+    },
+    ...
+});
+```
+
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
+
+```tsx
+...
+type ListItemProps = {
+    ...
+    time: string;
+};
+...
+export default function ListItem({ ..., time, ... }: ListItemProps) {
+    return (
+        <Pressable ...>
+            <Text style={styles.time}>{time}{/* Add time text with style */}</Text> 
+            ...
+        </Pressable>
+    );
+}
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+          ...
+            <ListItem
+              ...
+              time={item.time} // Add time prop
+              ...
+            />
+          ...            
+```
+
+## **Lab V: Project structure, separation of data and types**
+
+## V.1. Refactoring - Project Structure
+
+### V.1.1. New Project Structure
+
+```bash
+mkdir -p data                       # data                        (V.1.1.)
+touch data/events.ts                # └── events.ts               (V.1.2.)
+mkdir -p types                      # types                       (III.2.1.)
+touch types/Event.ts                # └── Event.ts                (V.1.3.)
+```
+
+### V.1.2. Event type separation
+
+[`types/Event.ts`](./my-app/types/Event.ts)
+
+```tsx
+// Copy from HomeScreen.tsx
+export type EventItem = {     // type -> export type
+  eventId: number;
+  title: string;
+  description: string;
+  location: string;
+  isHighlighted: boolean;
+  time: string;
+};
+```
+
+### V.1.3. Extracting data to a separate file
+
+[`data/events.ts`](./my-app/data/events.ts)
+
+```tsx
+import { EventItem } from "../types/Event";
+
+export const events: EventItem[] = [
+    { eventId: 1, title: "Lecture: React", description: "10:00", location: "A1", isHighlighted: true, time: "10:00" },
+    { eventId: 2, title: "Workshop: AI", description: "12:00", location: "B2", isHighlighted: false, time: "12:00" },
+    { eventId: 3, title: "Meeting: Coding Club", description: "15:00", location: "C3", isHighlighted: true, time: "15:00" },
+    { eventId: 4, title: "Seminar: Mobile Dev", description: "17:00", location: "D4", isHighlighted: false, time: "17:00" },
+    { eventId: 5, title: "Hackathon Kickoff", description: "19:00", location: "E5", isHighlighted: true, time: "19:00" },
+    { eventId: 6, title: "Lab: Database Design", description: "09:00", location: "F6", isHighlighted: false, time: "09:00" },
+    { eventId: 7, title: "Lecture: TypeScript", description: "11:00", location: "G7", isHighlighted: true, time: "11:00" },
+    { eventId: 8, title: "Workshop: UI/UX", description: "13:00", location: "H8", isHighlighted: false, time: "13:00" },
+    { eventId: 9, title: "Networking Session", description: "15:30", location: "I9", isHighlighted: true, time: "15:30" },
+    { eventId: 10, title: "Seminar: Cloud Services", description: "17:30", location: "J0", isHighlighted: false, time: "17:30" },
+    { eventId: 11, title: "Code Review Panel", description: "19:00", location: "K1", isHighlighted: true, time: "19:00" },
+    { eventId: 12, title: "Workshop: Testing", description: "09:30", location: "L2", isHighlighted: false, time: "09:30" },
+    { eventId: 13, title: "Closing Ceremony", description: "20:00", location: "Main Hall", isHighlighted: true, time: "20:00" },
+    { eventId: 14, title: "After Party", description: "22:00", location: "Village", isHighlighted: true, time: "22:00" },
+  ];
+```
+
+### V.1.4. Use data in HomeScreen
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+// Remove events array from HomeScreen and use imported data
+import { events } from "../data/events";
+...
+...
+```
+
+### V.1.5. Typing renderItem
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+// Add import for Event type
+import { EventItem } from "../types/Event";
+...
+          renderItem={({ item }: { item: EventItem }) => ( // renderItem={({ item }) => ( -> renderItem={({ item }: { item: EventItem }) => (
+          ...
+```
+
+### V.1.6. Transferring new data
+
+Already done in the previous step ([`IV.3.2.`](#iv32-update-the-eventitem-type-data-and-navigation-call))
+
+### V.1.7. Update the DetailsScreen
+
+Already done in the previous steps [`IV.3.1`](#iv31-update-types-types-to-include-the-time-parameter), ([`IV.3.3.`](#iv33-add-text-styling-for-the-time) and [`IV.3.4.`](#iv34-extract-the-time-from-parameters-and-render-it-on-the-screen))
+
+## V.2. Practical tasks
+
+### V.2.1. Make Navigation.ts (Aditional)
+
+Already done in the previous steps ([`III.4.1.`](#iii41-add-types-for-navigation-in-typesnavigationts-insted-of-in-indextsx) and [`III.5.1.`](#iii51-type-navigation-in-homescreen))
+
+### V.2.2. Add new field `Event:` - `date: string`
+
+[`types/Event.ts`](./my-app/types/Event.ts)
+
+```tsx
+export type EventItem = {
+  ...
+  date: string; // Add date field
+};
+```
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  ...
+  Details: {
+    ...
+    date: string; // Add date field
+  };
+};
+```
+
+### V.2.3. Add date in `event.ts`
+
+[`data/events.ts`](./my-app/data/events.ts)
+
+```tsx
+// Add date field to all events
+export const events: EventItem[] = [
+    { ..., date: "2026-09-01" },
+    { ..., date: "2026-09-01" },
+    ...
+];
+```
+
+### V.2.4. Update navigation call to pass the date
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+...
+            <ListItem
+              ... 
+              date={item.date} // Add date prop
+              ...
+              onPress={() =>
+                navigation.navigate("Details", {
+                  ...
+                  date: item.date, // Add date to navigation parameters
+                })
+              }
+            />
+...
+```
+
+### V.2.5. Display date in ListItem
+
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  date: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 4,
+    color: "#444",
+  },
+  ...
+```
+
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
+
+```tsx
+...
+type ListItemProps = {
+    ...
+    date: string; // Add date field in props
+};
+
+export default function ListItem({ title, description,
+    ...
+     , date // < Add date in props>
+
+    }: ListItemProps) {
+    return (
+        <Pressable onPress={onPress} style={[styles.container,      
+            ...               
+            <Text style={styles.date}>Date: {date} {/* Add date display */} </Text> 
+        </Pressable>
+    );
+}
+```
+
+### V.2.6. Display date in DetailsScreen
+
+[`styles/DetailScreenStyles.tsx`](./my-app/styles/DetailScreenStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  date: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 4,
+    color: "#444",
+  },
+});
+```
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+...
+export default function DetailsScreen({ route }: DetailsScreenProps) {
+  const { ..., date } = route.params;
+
+  return (
+    <View style={styles.container}>
+      ...
+      <Text style={styles.date}>Date: {date}</Text>
+    </View>
+  );
+}
+```
+
+## V.3. Extra tasks
+
+### V.3.1. Organize all other types and styles
+
+**Already done in the previous steps, but here is a summary of where to find the code for each part:**
+
+**For styles (`/styles` directory):**
+
+* [`I.10.1.`](#i101-change-the-background-color-of-application) – [`I.10.3.`](#i103-add-component-footer-with-stylesheet-in-footerstylestsx) (creation of the directory and initial style files, e.g., for Footer)
+* [`II.1.0.`](#ii10-create-this-structure-in-main-directory) – [`II.1.2.`](#ii12-create-new-component-listitem) (additional styles: Header, ListItem)
+* [`III.2.1.`](#iii21-create-screens-directory-and-files) – [`III.2.3.`](#iii23-create-detailscreen) (styles for Home and Detail screens)
+
+**For types (`/types` directory):**
+
+* [`III.4.1.`](#iii41-add-types-for-navigation-in-typesnavigationts-insted-of-in-indextsx) (creation of the directory and `Navigation.ts`)
+* [`V.1.1.`](#v11-new-project-structure) – [`V.1.2.`](#v12-event-type-separation) (extraction of `Event.ts`)
+
+### V.3.2. Add category field to the types
+
+[`types/Event.ts`](/my-app/types/Event.ts)
+
+```tsx
+export type EventItem = {
+  ...
+  category: string;
+};
+
+```
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  ...
+  Details: {
+    ...
+    category: string;
+  };
+};
+
+```
+
+### V.3.3. Add another events `in events.ts` (+ integrate category field in the data)
+
+[`data/events.ts`](./my-app/data/events.ts)
+
+```tsx
+...
+export const events: EventItem[] = [
+    // Edit descriptions and add category field for existing and new events
+    { eventId: 1, ..., description: "Introduction to React Native basics.", ..., category: "Lecture" },
+    { eventId: 2, ..., description: "Hands-on machine learning models training.", ..., category: "Workshop" },
+    { eventId: 3, ..., description: "Weekly algorithmic challenges and pizza.", ..., category: "Meeting" },
+    { eventId: 4, ..., description: "Future of cross-platform frameworks.", ..., category: "Seminar" },
+    { eventId: 5, ..., description: "Team formation and rules explanation.", ..., category: "Event" },
+    { eventId: 6, ..., description: "Normalizing SQL databases.", ..., category: "Lab" },
+    { eventId: 7, ..., description: "Advanced typing and generics.", ..., category: "Lecture" },
+    { eventId: 8, ..., description: "Prototyping in Figma.", ..., category: "Workshop" },
+    { eventId: 9, ..., description: "Meet industry leaders.", ..., category: "Networking" },
+    { eventId: 10, ..., description: "AWS and Azure deployment strategies.", ..., category: "Seminar" },
+    { eventId: 11, ..., description: "Best practices in PRs.", ..., category: "Panel" },
+    { eventId: 12, ..., description: "Unit testing with Jest.", ..., category: "Workshop" },
+    { eventId: 13, ..., description: "Awards and summary.", ..., category: "Event" },
+    { eventId: 14, ..., description: "Music and drinks.", ..., category: "Party" },
+    { eventId: 15, ..., description: "Cybersecurity fundamentals.", ..., category: "Lecture" },
+    { eventId: 16, ..., description: "GitHub Actions setup.", ..., category: "Workshop" }
+    // Add more events with different categories and descriptions if needed..
+  ];
+```
+
+### V.3.4. Display category in ListItem
+
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+    },
+    category: {
+        fontSize: 12,
+        fontWeight: "bold",
+        color: "#007BFF",
+        textTransform: "uppercase",
+        marginBottom: 4,
+    },
+});
+```
+
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
+
+```tsx
+...
+type ListItemProps = {
+    ...
+    category: string;
+    ...
+};
+
+export default function ListItem({ 
+    ...
+    category
+    ...
+}: ListItemProps) {
+    return (
+        <Pressable onPress={onPress} style={[ ... ]}>
+            ...
+            <Text style={styles.category}>{category}</Text>
+            ...
+        </Pressable>
+    );
+}
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+...
+          <ListItem
+            ...
+            category={item.category}
+            ...
+            onPress={() =>
+              navigation.navigate("Details", {
+                ...
+                category: item.category,
+              })
+            }
+          />
+...
+```
+
+### V.3.5. Display category in DetailsScreen
+
+[`styles/DetailScreenStyles.tsx`](./my-app/styles/DetailScreenStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  category: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#007BFF",
+    textTransform: "uppercase",
+    marginBottom: 10,
+    },
+    ...
+});
+```
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+...
+export default function DetailsScreen({ route }: DetailsScreenProps) {
+  const { ..., category } = route.params;
+
+  return (
+    <View style={styles.container}>
+      ...
+      <Text style={styles.category}>{category}</Text>
       ...
     </View>
   );

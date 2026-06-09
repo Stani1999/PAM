@@ -7,5 +7,7 @@ export type RootStackParamList = {
     description: string;
     location: string; // <IV.1.1./>
     time: string; // <IV.3.1./>
+    date: string; // <V.2.2./>
+    category: string; // <V.3.2./>
   };
 };

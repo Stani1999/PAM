@@ -16,10 +16,7 @@ export const styles = StyleSheet.create({
         borderRadius: 16,                       // <IV.2.5./> 8 -> 16
         elevation: 5,                           // <IV.2.5./> 3 -> 5
         // <IV.2.5.>
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.15,
-        shadowRadius: 10,
+        boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.15)",
         // </IV.2.5.>
     },
     title: {
@@ -27,6 +24,15 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 5,
     },
+    // <V.3.5.>
+    time: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "#333",
+        marginBottom: 4,
+    },
+    // </V.3.5.>
+
     // <II.2.1.>
     location: {
         fontSize: 12,
@@ -42,4 +48,23 @@ export const styles = StyleSheet.create({
         color: "#555",
     },
     // </IV.1.1.>
+
+    // <V.2.5.>
+    date: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginTop: 4,
+        color: "#444",
+    },
+    // </V.2.5.>
+
+    // <V.3.4.>
+    category: {
+        fontSize: 12,
+        fontWeight: "bold",
+        color: "#007BFF",
+        textTransform: "uppercase",
+        marginBottom: 4,
+    },
+    // </V.3.4.>
 });
