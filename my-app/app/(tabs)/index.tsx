@@ -1,4 +1,5 @@
 // Lab III.3.1.
+import AddEventScreen from "@/screens/AddEventScreen"; // <VI.2.6./>
 import { RootStackParamList } from "../../types/Navigation"; // <III.4.2/>
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -23,6 +24,15 @@ export default function App() {
           })}
         />
         {/* /III.6.4. */}
+
+        {/* <VI.2.6.> */}
+        <Stack.Screen 
+          name="AddEvent" 
+          component={AddEventScreen} 
+          options={{ title: "Add Event" }} 
+        />
+        {/* </VI.2.6.> */}
+
       </Stack.Navigator>
   );
 }

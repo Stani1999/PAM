@@ -564,7 +564,7 @@ git commit -m "Lab 1 - RN basics+"
 ### II.1.0. Create this structure in main directory
 
 ```bash
-mkdir -p components             # components              
+                                # components              
 touch components/Header.tsx     # ├── Header.tsx          (I.9.3.)
 touch components/Footer.tsx     # ├── Footer.tsx          (I.10.3.)
 touch components/ListItem.tsx   # └── ListItem.tsx        (II.1.2.)
@@ -737,7 +737,7 @@ export default function ListItem({ title, description,
     return (
         <View style={styles.container}>
             ...
-            <Text style={styles.location}>{location}{/* Add location in View */}</Text>
+            <Text style={styles.location}>Location: {location}{/* Add location in View */}</Text>
         </View>
     );
 }
@@ -1309,7 +1309,7 @@ export default function ListItem({
         <Pressable onPress={onPress} style={[ ...                 // View -> Pressable onPress={onPress}
          ...]}>
             ...
-            <Text style={styles.description}>{description}{/*Add style={styles.description}>*/}</Text>  
+            <Text style={styles.description}>Description: {description}{/*Add style={styles.description}>*/}</Text>  
         </Pressable>                                              // View -> Pressable
     );
 }
@@ -1343,7 +1343,7 @@ export const styles = StyleSheet.create({
 
 ```tsx
 import ListItem from "../components/ListItem"; // Add import for ListItem
-import { FlatList, ... } from "react-native";  // Add import for FlatList
+import { ..., FlatList } from "react-native";  // Button -> FlatList
 ...
 
 // Add type for event item
@@ -1438,8 +1438,8 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
   return (
     <View style={styles.container}>
     ...
-      <Text style={styles.description}>{description}{/* Add style={styles.description */}</Text>             
-      <Text style={styles.location}>{location}{/* Add location text with style */}</Text>
+      <Text style={styles.description}>Description: {description}{/* Add style={styles.description */}</Text>             
+      <Text style={styles.location}>Location: {location}{/* Add location text with style */}</Text>
     </View>
   );
 }
@@ -1869,7 +1869,7 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 * [`III.4.1.`](#iii41-add-types-for-navigation-in-typesnavigationts-insted-of-in-indextsx) (creation of the directory and `Navigation.ts`)
 * [`V.1.1.`](#v11-new-project-structure) – [`V.1.2.`](#v12-event-type-separation) (extraction of `Event.ts`)
 
-### V.3.2. Add category field to the types
+### V.3.2. Add category field to the types (before adding new events)
 
 [`types/Event.ts`](/my-app/types/Event.ts)
 
@@ -2017,4 +2017,570 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
     </View>
   );
 }
+```
+
+## **Lab VI: Forms and adding data to a list**
+
+## VI.1. Events list as starting point
+
+### VI.1.0. Create the following structure in the main directory
+
+```bash
+                                      # components              
+touch components/AddEventForm.tsx     # └── AddEventForm.tsx          (VI.1.2.)
+mkdir -p styles                       # styles                        (VI.1.10.)
+touch styles/AddEventFormStyles.tsx # └── AddEventFormStyles.tsx      (VI.1.2.)
+mkdir -p screens                      # screens                       (II.1.0.)
+touch screens/AddEventScreen.tsx      # └── AddEventScreen.tsx        (VI.2.6.)
+```
+
+### VI.1.1. Check events and Event type is the same as required for Lab VI
+
+Requirement: [`types/Event.ts`](./my-app/types/Event.ts)
+
+```tsx
+// Remove isHighlighted field!
+export type EventItem = {
+  eventId: number;
+  title: string;
+  description: string;
+  location: string;
+  // isHighlighted: boolean;
+  time: string;
+  date: string;
+  category: string;
+};
+```
+
+Requirement: [`data/events.ts`](./my-app/data/events.ts)
+
+```tsx
+...
+// Remove isHighlighted field from all events in EventItem
+export const events: EventItem[] = [
+    { eventId: 1, title: "Lecture: React", description: "Introduction to React Native basics.", location: "A1",// isHighlighted: true, Remove this field!
+     time: "10:00", date: "2026-10-12", category: "Lecture" },
+    ... // and in other events without isHighlighted field
+  ];
+
+```
+
+### V.1.2. To maintain the functionality of isHighlighted, it will be implemented as a style change for the event when hovered over (hover)
+
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
+
+```tsx
+...
+type ListItemProps = {
+    // isHighlighted: boolean; // Remove this field
+    title: string;
+    ...
+};
+
+export default function ListItem({ title, description,
+     ...
+     // , isHighlighted // Remove this field!
+     ...
+    }: ListItemProps) {
+    return (
+        <Pressable 
+            onPress={onPress} 
+            style={
+              ({ pressed, hovered }: { pressed: boolean; hovered?: boolean }) => // Add pressed and hovered state for highlighting
+              [styles.container,
+                (pressed || hovered)            // isHighlighted -> (pressed || hovered)
+                && styles.highlightedContainer 
+            ]}
+        >
+            ...
+        </Pressable>                                                                // View -> Pressable
+    );
+}
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+...
+            <ListItem
+              title={item.title}
+              category={item.category} /* <V.3.4./> */
+              time={item.time} /* <IV.3.5./> */
+              date={item.date} /* <V.2.4./> */
+              description={item.description}
+              location={item.location}
+              // isHighlighted={item.isHighlighted} // Remove this prop
+            onPress={() =>
+              navigation.navigate("Details", {
+...
+```
+
+### VI.1.3. Create a new screen `AddEventScreen` with a form to add new events (Before update HomeScreen)
+
+[`styles/AddEventFormStyles.tsx`](./my-app/styles/AddEventFormStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ffffff",
+    marginHorizontal: 12,
+    marginBottom: 16,
+    padding: 12,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: "#fafafa",
+  },
+});
+```
+
+[`components/AddEventForm.tsx`](./my-app/components/AddEventForm.tsx)
+
+```tsx
+import { useState } from "react";
+import { View, TextInput, Button, Alert } from "react-native";
+import { EventItem } from "../types/Event";
+import { styles } from "../styles/AddEventFormStyles";
+
+type AddEventFormProps = {
+  onAddEvent: (event: Omit<EventItem, "eventId">) => void;
+};
+
+export default function AddEventForm({ onAddEvent }: AddEventFormProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+  const [category, setCategory] = useState("");
+
+  const handleAddEvent = () => {
+    if (!title || !description || !location || !time || !date || !category) {
+      Alert.alert("Error", "All fields must be completed.");
+      return;
+    }
+
+    onAddEvent({
+    title,
+    description,
+    location,
+    time,
+    date,
+    category
+    });
+
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setTime("");
+    setDate("");
+    setCategory("");
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Event Title"
+        value={title}
+        onChangeText={setTitle}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Category"
+        value={category}
+        onChangeText={setCategory}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Description"
+        value={description}
+        onChangeText={setDescription}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Time (e.g., 18:00)"
+        value={time}
+        onChangeText={setTime}
+        style={styles.input}
+      />
+            <TextInput
+        placeholder="Date (e.g., 2026-03-20)"
+        value={date}
+        onChangeText={setDate}
+        style={styles.input}
+      />
+            <TextInput
+        placeholder="Location"
+        value={location}
+        onChangeText={setLocation}
+        style={styles.input}
+      />
+      <Button title="Add Event" onPress={handleAddEvent} />
+    </View>
+  );
+}
+```
+
+### VI.1.4. Update HomeScreen — list as state
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+import { useState } from "react";                           // Add useState import
+import AddEventForm from "../components/AddEventForm";      // Add import for AddEventForm
+...
+import { events as initialEvents } from "../data/events";   // events -> events as initialEvents
+...
+
+export default function HomeScreen({ navigation }: HomeScreenProps) {
+  // Add state for events, initialized with imported events data
+  const [events, setEvents] = useState<EventItem[]>(initialEvents);
+
+  // Add function to handle adding a new event to the list (Omit eventId since it will be generated)
+  const addEvent = (newEvent: Omit<EventItem, "eventId">) => {
+    const eventToAdd: EventItem = {
+      eventId: Date.now(),
+      ...newEvent,
+    };
+
+    // Add the new event to the top of the list
+    setEvents((prevEvents) => [eventToAdd, ...prevEvents]);
+  };
+
+  return (
+    // <IV.1.2.>
+    <View style={styles.container}>
+      <Text style={styles.header}>Wydarzenia</Text>
+      <AddEventForm onAddEvent={addEvent} />                  {/* Add event form */}
+      ...
+
+```
+
+### VI.1.5. Update ListItem
+
+Already updated in the previous step [`VI.1.2.`](#iv12-creating-an-events-list-in-homescreen)
+
+### VI.1.6. Update DetailsScreen
+
+Already updated in the previous step [`V.3.5.`](#v35-display-category-in-detailsscreen)
+
+## VI.2. Practice tasks
+
+### VI.2.0. Create a new file for validation logic (optional, for better code organization)
+
+```bash
+mkdir -p utils            # utils                        (VI.2.0.)
+touch utils/validation.ts # └── validation.ts            (VI.2.2.)
+```
+
+### VI.2.1. Add a new field to the form: `speaker`
+
+[`types/Event.ts`](./my-app/types/Event.ts)
+
+```tsx
+export type EventItem = {
+  ...
+  speaker: string; // Add speaker field
+};
+
+```
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  ...
+  Details: {
+    ...
+    speaker: string; // Add speaker field
+  };
+};
+
+```
+
+[`data/events.ts`](./my-app/data/events.ts)
+
+```tsx
+...
+export const events: EventItem[] = [
+    // Add speaker to existing events
+    { ..., category: "Lecture", speaker: "Dr. Maciej Stanisław" },  
+    { ..., category: "Workshop", speaker: "J.K. Chmielacky" },
+    ...
+  ];
+```
+
+[`components/AddEventForm.tsx`](./my-app/components/AddEventForm.tsx)
+
+```tsx
+...
+export default function AddEventForm({ onAddEvent }: AddEventFormProps) {
+  ...
+  const [speaker, setSpeaker] = useState(""); // Add state for speaker
+
+  const handleAddEvent = () => {
+    if (!title || !description || !location || !time || !date || !category || 
+    !speaker) { //  Add speaker to validation
+      Alert.alert("Error", "All fields must be completed.");
+      return;
+    }
+
+    onAddEvent({
+      ...
+      speaker // Add speaker to the event object
+    });
+
+    ...
+    setCategory("");
+    setSpeaker(""); // Add reset for speaker field
+  };
+
+  return (
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Event Title"
+        ...
+      />
+      <TextInput
+        placeholder="Speaker"
+        value={speaker}
+        onChangeText={setSpeaker}
+        style={styles.input}
+      />
+        ...
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+...
+          <ListItem
+            ...
+            onPress={() =>
+              navigation.navigate("Details", {
+                ...
+                speaker: item.speaker, // Add speaker to navigation parameters
+              })
+            }
+          />
+...
+
+```
+
+[`screens/DetailScreen.tsx`](./my-app/screens/DetailScreen.tsx)
+
+```tsx
+...
+export default function DetailsScreen({ route }: DetailsScreenProps) {
+  const { 
+    ...
+    speaker // <VI.2.1./>
+  } = route.params; 
+  return (
+    <View style={styles.container}>
+      ...
+      <Text style={styles.description}>Speaker: {speaker}{/* Add speaker display */}</Text> 
+      ...
+
+```
+
+### VI.2.2. Add validation
+
+[`utils/validation.ts`](./my-app/utils/validation.ts)
+
+```tsx
+export const validateEventForm = (
+  title: string,
+  date: string,
+  description: string,
+  location: string,
+  time: string,
+  category: string,
+  speaker: string
+): string | null => {
+  if (title.trim().length < 3) return "Title must be at least 3 characters long."; // As required min 3 characters for title
+  if (!date.trim()) return "Date cannot be empty.";                                // As required date cannot be empty
+  if (!speaker.trim()) return "Speaker cannot be empty.";
+  if (!description.trim()) return "Description cannot be empty.";
+  if (!location.trim()) return "Location cannot be empty.";
+  if (!time.trim()) return "Time cannot be empty.";
+  if (!category.trim()) return "Category cannot be empty.";
+  
+  return null;
+};
+```
+
+### VI.2.3. Add success alert (and use the validation function) in AddEventForm
+
+[`components/AddEventForm.tsx`](./my-app/components/AddEventForm.tsx)
+
+```tsx
+import { validateEventForm } from "../utils/validation";  // Import validation function from step VI.2.2.
+...
+  const handleAddEvent = () => {
+    // Replace old validation if (!title || ...} with new validation function
+  const errorMessage = validateEventForm(title, date, description, location, time, category, speaker);
+
+  if (errorMessage) {
+    Alert.alert("Validation Error", errorMessage);
+    return;
+  }
+  ...
+
+    // Add success alert after adding the event
+    Alert.alert("Success!", "Event added successfully.");
+
+    setTitle("");
+    ...
+```
+
+### VI.2.4. Add a different color if category === "Workshop"
+
+[`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+    ...
+    workshopContainer: {
+        backgroundColor: "rgba(135, 206, 235, 0.6)",
+    },
+});
+```
+
+[`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
+
+```tsx
+...
+    return (
+        <Pressable 
+            onPress={onPress} 
+            style={({ pressed, hovered }: { pressed: boolean; hovered?: boolean }) => [ 
+                styles.container,
+                category === "Workshop" && styles.workshopContainer, // Add different color for workshops
+                ...
+```
+
+### VI.2.5. Add "Clear Form" button
+
+[`components/AddEventForm.tsx`](./my-app/components/AddEventForm.tsx)
+
+```tsx
+  ...
+  // Add function to clear the form
+  const handleClearForm = () => {
+    setTitle("");
+    setDescription("");
+    setLocation("");
+    setTime("");
+    setDate("");
+    setCategory("");
+    setSpeaker("");
+  };
+
+  return (
+    <View style={styles.container}>
+      ...
+
+      {/* Add Clear Form Button: */}
+      <View style={{ marginTop: 10 }}>
+        <Button title="Clear Form" onPress={handleClearForm} color="#ff4444" />
+      </View>
+  
+    </View>
+  );
+}
+```
+
+### VI.2.6. Add a button in HomeScreen to navigate to a new Add Event screen
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+import { EventItem } from "./Event"; // Add import for EventItem type
+
+export type RootStackParamList = {
+  Home: undefined;
+  Details: { 
+    ... 
+  };
+
+  // AddEvent screen parameters (function to add event)
+  AddEvent: { onAddEvent: (event: Omit<EventItem, "eventId">) => void };
+};
+```
+
+Create [`screens/AddEventScreen.tsx`](./my-app/screens/AddEventScreen.tsx)
+
+```tsx
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../types/Navigation";
+import AddEventForm from "../components/AddEventForm";
+
+type Props = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "AddEvent">;
+  route: RouteProp<RootStackParamList, "AddEvent">;
+};
+
+export default function AddEventScreen({ navigation, route }: Props) {
+  return (
+    <AddEventForm 
+      onAddEvent={(newEvent) => {
+        route.params.onAddEvent(newEvent);
+        navigation.goBack();
+      }} 
+    />
+  );
+}
+```
+
+Update [`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+...
+// import AddEventForm from "../components/AddEventForm";   Remove this import
+...
+import { ... Button } from "react-native"; // Add Button import
+...
+
+...
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Events</Text>
+      
+      {/* Replace <AddEventForm onAddEvent={addEvent} /> with: */}
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+        <Button 
+          title="Add New Event" 
+          onPress={() => navigation.navigate("AddEvent", { onAddEvent: addEvent })} 
+        />
+      </View>
+...
+```
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+import AddEventScreen from "@/screens/AddEventScreen"; // Add import for AddEventScreen
+...
+
+      <Stack.Navigator>
+        ...
+        {/*  Add new screen to the navigator */}
+        <Stack.Screen 
+          name="AddEvent" 
+          component={AddEventScreen} 
+          options={{ title: "Add Event" }} 
+        />
+
+      </Stack.Navigator>
 ```

@@ -67,4 +67,10 @@ export const styles = StyleSheet.create({
         marginBottom: 4,
     },
     // </V.3.4.>
+
+    // <VI.2.4.>
+    workshopContainer: {
+        backgroundColor: "rgba(135, 206, 235, 0.6)", 
+    },
+    // </VI.2.4.>
 });

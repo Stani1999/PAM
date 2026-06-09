@@ -1,12 +1,19 @@
 // Lab III.2.2.
+// <VI.1.4.>
+import { useState } from "react";                           
+// import AddEventForm from "../components/AddEventForm";   <VI.2.6./>
+// </VI.1.4.>    
 import { EventItem } from "../types/Event";                 // <V.1.5./> 
-import { events } from "../data/events";                    // <V.1.4./> 
+// <V.1.4.> 
+import { events as initialEvents                            // <VI.1.4./>
+} from "../data/events";                    
+// <V.1.4./> 
 import ListItem from "../components/ListItem";              // <IV.1.2./> 
 // <III.5.1.>
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/Navigation";
 // </III.5.1.>
-import { FlatList, View, Text, Button } from "react-native"; // <IV.1.2./> 
+import { View, Text, FlatList, Button } from "react-native"; // <IV.1.2./> 
 import { styles } from "../styles/HomeScreenStyles";
 
 // <III.5.1.>
@@ -29,7 +36,18 @@ type HomeScreenProps = {
 // </V.1.4.>
 
 export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.1./>
-  
+  // <VI.1.4.>
+  const [events, setEvents] = useState<EventItem[]>(initialEvents);
+
+  const addEvent = (newEvent: Omit<EventItem, "eventId">) => {
+  const eventToAdd: EventItem = {
+    eventId: Date.now(),
+    ...newEvent,
+  };
+
+    setEvents((prevEvents) => [eventToAdd, ...prevEvents]);
+  };
+  // <VI.1.4./>
 
 // // <IV.1.2.>
 //   const events: EventItem[] = [
@@ -54,14 +72,28 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
 //   ];
 //   // </IV.1.2.>
 
+// <IV.1.2.>
   return (
-    // <IV.1.2.>
     <View style={styles.container}>
       <Text style={styles.header}>Events</Text>
-        <FlatList
+      
+      {/* 
+      <VI.2.6.>
+      <VI.1.4.:> 
+      <AddEventForm onAddEvent={addEvent} />
+      */}
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+        <Button 
+          title="Add New Event" 
+          onPress={() => navigation.navigate("AddEvent", { onAddEvent: addEvent })} 
+        />
+      </View>
+      {/* </VI.2.6.> */}
+      
+      <FlatList
           data={events}
           keyExtractor={(item) => item.eventId.toString()}
-          renderItem={({ item }: { item: EventItem }) => ( // renderItem={({ item }) => ( ->
+          renderItem={({ item }: { item: EventItem }) => ( // <V.1.5./>
             <ListItem
               title={item.title}
               category={item.category} /* <V.3.4./> */
@@ -69,7 +101,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
               date={item.date} /* <V.2.4./> */
               description={item.description}
               location={item.location}
-              isHighlighted={item.isHighlighted}
+              // isHighlighted={item.isHighlighted} <VI.1.2./>
               onPress={() =>
                 navigation.navigate("Details", {
                   eventId: item.eventId,
@@ -79,12 +111,15 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
                   location: item.location,
                   time: item.time, /* <IV.3.2./> */
                   date: item.date, /* <V.2.4./> */
+                  speaker: item.speaker, // <VI.2.1./>
                 })
               }
             />
           )}
         />
     </View> 
+  );
+}
     // <View style={styles.container}>
     //   <Text style={styles.title}>Events List</Text>
 
@@ -168,6 +203,6 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
     //   />
     //   {/* </III.6.5> */}
     // </View>
-    // <IV.1.2.> 
-  );
-}
+    //   );
+    // }
+// <IV.1.2.>
