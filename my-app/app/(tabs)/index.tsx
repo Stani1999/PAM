@@ -1,4 +1,5 @@
 // Lab III.3.1.
+import UserDetailsScreen from "@/screens/UsersDetailsScreen"; // <IX.3.3./>
 import TodosScreen from "@/screens/TodosScreen"; // <VIII.2.4./>
 import UsersScreen from "../../screens/UsersScreen"; // <VIII.1.7.>
 // <VII.1.6.>
@@ -67,6 +68,14 @@ export default function App() {
           options={{ title: "To-Do List" }}
         />
         {/* </VIII.2.4.> */}
+
+        {/* <IX.3.3.> */}
+        <Stack.Screen
+          name="UserDetails"
+          component={UserDetailsScreen}
+          options={{ title: "User Details" }}
+        />
+        {/* </IX.3.3.> */}
 
       </Stack.Navigator>
   );

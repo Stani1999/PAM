@@ -1,4 +1,5 @@
 // Lab VIII.1.6.
+import { UsersScreenProps } from "../types/Navigation"; // <IX.3.1./>
 import {
   View,
   Text,
@@ -10,7 +11,7 @@ import UserItem from "../components/UserItem";
 import { useFetch } from "../hooks/useFetch";
 import { styles } from "../styles/UsersScreenStyles";
 
-export default function UsersScreen() {
+export default function UsersScreen({ navigation }: UsersScreenProps) { // <IX.3.1./>
   const {
     data: users,
     isLoading,
@@ -56,7 +57,7 @@ export default function UsersScreen() {
             name={item.name}
             username={item.username}
             email={item.email}
-            onPress={() => console.log("Clicked user:", item.id)}
+            onPress={() => navigation.navigate("UserDetails", {id: item.id, })} // </IX.3.4.>
           />
         )}
       />

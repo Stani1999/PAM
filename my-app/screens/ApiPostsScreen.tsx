@@ -92,7 +92,7 @@ export default function ApiPostsScreen({ navigation }: ApiPostsScreenProps) {
       <Text style={styles.header}>Posts from API: {posts?.length ?? 0}{/* <VIII.1.3./> <VII.2.3./> */}</Text>
 
       <FlatList
-        data={posts ?posts.slice(0, 10) : []}                       // <VIII.1.3./> <VII.2.1./> 
+        data={posts ?posts.slice(0, 10) : []}           // <VIII.1.3./> <VII.2.1./> 
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ApiPostItem
@@ -102,8 +102,10 @@ export default function ApiPostsScreen({ navigation }: ApiPostsScreenProps) {
             onPress={() =>
               navigation.navigate("ApiPostDetails", {
                 id: item.id,
-                title: item.title,
-                body: item.body,
+                // 
+                //title: item.title,
+                //body: item.body,
+                //
               })
             }
           />

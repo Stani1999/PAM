@@ -121,10 +121,10 @@ mv cmdline-tools latest
 
 ```bash
 $HOME/
-└──Android/
-   └──Sdk/
-      └──cmdline-tools/
-         └──latest
+└── Android/
+    └── Sdk/
+        └── cmdline-tools/
+            └── latest
 ```
 
 ## I.4. Set environment variables
@@ -939,6 +939,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#fff",
   },
   title: {
     fontSize: 22,
@@ -2878,10 +2879,12 @@ type ApiPostDetailsRouteProp = RouteProp<RootStackParamList, "ApiPostDetails">;
 
 type ApiPostDetailsScreenProps = { route: ApiPostDetailsRouteProp };
 
-export default function ApiPostDetailsScreen({
-  route,
-}: ApiPostDetailsScreenProps) {
-  const { id, title, body } = route.params;
+export default function ApiPostDetailsScreen({route,}: ApiPostDetailsScreenProps) {
+  const { 
+    id, 
+    title, 
+    body 
+  } = route.params;
 
   return (
     <View style={styles.container}>
@@ -3700,4 +3703,412 @@ import TodosScreen from "@/screens/TodosScreen"; // Add import for TodosScreen
     ...
   )
 ...
+```
+
+## **Lab IX: API Data Details Screen
+
+## IX.1. I Don't now yet
+
+### IX.1.1. Final project structure (optional files = not listed)
+
+```bash
+                                          # components/
+                                          # ├── ApiPostItem.tsx
+                                          # ├── Header.tsx
+                                          # ├── ListItem.tsx
+                                          # ├── AddEventForm.tsx
+                                          # └── UserItem.tsx
+mkdir -p screens/                         # screens/
+                                          # ├── HomeScreen.tsx
+                                          # ├── DetailsScreen.tsx
+                                          # ├── ApiPostsScreen.tsx
+                                          # ├── ApiPostDetailsScreen.tsx
+                                          # ├── UsersScreen.tsx
+touch screens/UsersDetailsScreen.tsx      # ├── UsersDetailsScreen.tsx
+                                          # └── TodosScreen.tsx
+                                          # hooks/
+                                          # └── useFetch.ts
+mkdir -p types/                           # types/
+                                          # ├── Event.ts
+                                          # ├── Post.ts                   
+                                          # ├── User.ts
+                                          # ├── Todo.ts
+touch types/Comment.ts                    # ├── Comment.ts
+                                          # └── Navigation.ts
+mkdir -p styles/                          # styles/
+touch styles/UserDetailsScreenStyles.tsx  # ├── UserDetailsScreenStyles.tsx
+                                          # └── ...  (all styles is optional)      
+                                          # App.tsx
+```
+
+### IX.1.2. Post type
+
+Like in [`VII.1.2.`](#vii12-create-a-type-for-the-api-data)
+
+### IX.1.3. Changing navigation parameters (Logic transition: `ApiPostDetails` -> `Navigation`)
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+import { RouteProp } from "@react-navigation/native"; // Copy here import for RouteProp from ApiPostDetailsScreen
+...
+export type RootStackParamList = {
+  ...
+  ApiPostDetails: {
+    id: number;
+    // Remove all navigation parameters except id
+    // title: string;
+    // body: string;
+  };
+  ...
+};
+
+// Copy here both types from ApiPostDetailsScreen:
+type ApiPostDetailsRouteProp = RouteProp<RootStackParamList, "ApiPostDetails">;
+
+// Add export for ApiPostDetailsScreenProps after copying from ApiPostDetailsScreen:
+export type ApiPostDetailsScreenProps = { route: ApiPostDetailsRouteProp };
+```
+
+### IX.1.4. Update ApiPostsScreen
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+          <ApiPostItem
+            ...
+            onPress={() =>
+              navigation.navigate("ApiPostDetails", {
+                id: item.id,
+                // Remove all navigation parameters except id
+                //title: item.title,
+                //body: item.body,
+                //
+              })
+            }
+          />
+```
+
+### IX.1.5. New ApiDetailsScreen
+
+[`styles/ApiPostDetailsScreenStyles.tsx`](./my-app/styles/ApiPostDetailsScreenStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  infoText: {
+    marginTop: 12,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: "red",
+    textAlign: "center",
+    marginHorizontal: 20,
+  },
+  author: {
+    fontSize: 15,
+    color: "#555",
+    marginBottom: 16,
+  },
+});
+```
+
+[`screens/ApiPostDetailsScreen.tsx`](./my-app/screens/ApiPostDetailsScreen.tsx)
+
+```tsx
+import { Post } from "../types/Post";                             // Add import for Post type
+import { useFetch } from "../hooks/useFetch";                     // Add import for useFetch hook
+import { View, Text, ActivityIndicator } from "react-native";     // Add import for ActivityIndicator
+// import { RouteProp } from "@react-navigation/native";          Remove import to avoid duplication
+import { ApiPostDetailsScreenProps } from "../types/Navigation";  // RootStackParamList -> ApiPostDetailsScreenProps
+...
+
+// Remove both type ApiPostDetailsRouteProp and ApiPostDetailsScreenProps
+// type ApiPostDetailsRouteProp = RouteProp<RootStackParamList, "ApiPostDetails">;
+// type ApiPostDetailsScreenProps = { route: ApiPostDetailsRouteProp };
+
+export default function ApiPostDetailsScreen({route,}: ApiPostDetailsScreenProps) {
+  const { 
+    id, 
+    // Remove all navigation parameters except id
+    // title, 
+    // body 
+  } = route.params;
+
+  const { 
+    data: post, 
+    isLoading, 
+    error 
+  } = useFetch<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`);
+
+  // Add loading state handling
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+        <Text style={styles.infoText}>Loading post details...</Text>
+      </View>
+    );
+  }
+
+  // Add error handling
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  // Add post not found handling
+  if (!post) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.infoText}>Post not found.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{post.title}{/* title -> post.title */}</Text>
+      <Text style={styles.meta}>Post ID: {post.id}{/* id -> post.id */}</Text>
+      <Text style={styles.author}>Author: user {post.userId}{/* Add author info */}</Text>
+      <Text style={styles.body}>{post.body}{/* body -> post.body */}</Text>
+    </View>
+  );
+}
+```
+
+## IX.2. Practice tasks - Number of Comments
+
+### IX.2.1. New type for Comment
+
+[`types/Comment.ts`](./my-app/types/Comment.ts)
+
+```tsx
+export type Comment = {
+    postId: number;
+    id: number;
+    name: string;
+    email: string;
+    body: string;
+};
+```
+
+### IX.2.2. Fetch comments in ApiPostDetailsScreen
+
+[`styles/ApiPostDetailsScreenStyles.tsx`](./my-app/styles/ApiPostDetailsScreenStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  comments: {
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});
+```
+
+[`screens/ApiPostDetailsScreen.tsx`](./my-app/screens/ApiPostDetailsScreen.tsx)
+
+```tsx
+import { Comment } from "../types/Comment"; // Add import for Comment type
+...
+
+export default function ApiPostDetailsScreen({route,}: ApiPostDetailsScreenProps) {
+  ...
+  } = useFetch<Post>(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  
+  // Place it Exactly below useFetch<Post>(...); !!!
+  const {
+    data: comments,
+    isLoading: areCommentsLoading,
+    error: commentsError,
+  } = useFetch<Comment[]>(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+
+  if (isLoading || areCommentsLoading) { // isLoading -> isLoading || areCommentsLoading
+    ...
+  }
+
+  if (error || commentsError) {          // error -> error || commentsError
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.errorText}>{error || commentsError}{/* error -> error || commentsError */}</Text>  
+      </View>
+    );
+  }
+```
+
+## IX.3. Practice tasks - User Details
+
+### IX.3.1. Update navigation parameters for UsersScreen
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"; // Add import for navigation prop
+...
+export type RootStackParamList = {
+  ...
+  // Add UserDetails screen with only id as parameter
+  UserDetails: {
+    id: number;
+  };
+};
+...
+
+type UserDetailsRouteProp = RouteProp<RootStackParamList, "UserDetails">;
+
+export type UserDetailsScreenProps = { route: UserDetailsRouteProp };
+```
+
+### IX.3.2. Create a new screen `UserDetailsScreen` with the same structure as `ApiPostDetailsScreen`
+
+[`styles/UserDetailsScreenStyles.tsx`](./my-app/styles/UserDetailsScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  username: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 10,
+  },
+  email: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  phone: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  website: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  infoText: {
+    marginTop: 12,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: "red",
+    textAlign: "center",
+    marginHorizontal: 20,
+  },
+});
+```
+
+[`screens/UsersDetailsScreen.tsx`](./my-app/screens/UsersDetailsScreen.tsx)
+
+```tsx
+import { View, Text, ActivityIndicator } from "react-native";
+import { User } from "../types/User";
+import { useFetch } from "../hooks/useFetch";
+import { styles } from "../styles/UserDetailsScreenStyles";
+import { UserDetailsScreenProps } from "../types/Navigation";
+
+export default function UserDetailsScreen({ route }: UserDetailsScreenProps) {
+  const { id } = route.params;
+
+  const { data: user, isLoading, error } = useFetch<User>(
+    `https://jsonplaceholder.typicode.com/users/${id}`
+  );
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+        <Text style={styles.infoText}>Loading user details...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  if (!user) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.infoText}>User not found.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.name}>{user.name}</Text>
+      <Text style={styles.username}>@{user.username}</Text>
+      <Text style={styles.email}>{user.email}</Text>
+      <Text style={styles.phone}>Phone: {user.phone}</Text>
+      <Text style={styles.website}>Website: {user.website}</Text>
+    </View>
+  );
+}
+```
+
+### IX.3.3. Update index.tsx to add UserDetailsScreen to the navigator
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+import UserDetailsScreen from "../../screens/UserDetailsScreen"; // Add import for UserDetailsScreen
+...
+      <Stack.Navigator>
+        ...
+        <Stack.Screen
+          name="UserDetails"
+          component={UserDetailsScreen}
+          options={{ title: "User Details" }}
+        />
+      </Stack.Navigator>
+      ...
+```
+
+### IX.3.4. Add navigation from UsersScreen to UserDetailsScreen
+
+[`screens/UsersScreen.tsx`](./my-app/screens/UsersScreen.tsx)
+
+```tsx
+import { UsersScreenProps } from "../types/Navigation"; // Add import for UsersScreenProps to get navigation prop
+...
+export default function UsersScreen({ navigation }: UsersScreenProps) { // Add navigation prop () -> ({ navigation }: UsersScreenProps)
+
+          ...
+          <UserItem
+            ...
+            onPress={() => navigation.navigate("UserDetails", {id: item.id, })} // instead of console.log("Clicked user:", item.id)}
+          />
+          ...
 ```

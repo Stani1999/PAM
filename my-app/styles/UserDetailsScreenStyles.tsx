@@ -1,4 +1,4 @@
-// Lab VII.1.5.
+// Lab IX.3.2.
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -7,24 +7,28 @@ export const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
   },
-  title: {
-    fontSize: 22,
+  name: {
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 16,
-    textTransform: "capitalize",
+    marginBottom: 10,
   },
-  meta: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 12,
+  username: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 10,
   },
-  body: {
+  email: {
     fontSize: 16,
-    lineHeight: 24,
-    color: "#333",
+    marginBottom: 10,
   },
-
-  // <IX.1.5.>
+  phone: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  website: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
   centered: {
     flex: 1,
     justifyContent: "center",
@@ -40,18 +44,4 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginHorizontal: 20,
   },
-  author: {
-    fontSize: 15,
-    color: "#555",
-    marginBottom: 16,
-  },
-  // </IX.1.5.>
-
-  // <IX.2.1.>
-  comments: {
-    marginTop: 20,
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  // </IX.2.1.>
 });
