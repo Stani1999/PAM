@@ -13,7 +13,7 @@ import ListItem from "../components/ListItem";              // <IV.1.2./>
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/Navigation";
 // </III.5.1.>
-import { View, Text, FlatList, Button } from "react-native"; // <IV.1.2./> 
+import { View, Text, FlatList, Button } from "react-native"; // <VI.2.6./> <IV.1.2./> 
 import { styles } from "../styles/HomeScreenStyles";
 
 // <III.5.1.>
@@ -89,7 +89,14 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
         />
       </View>
       {/* </VI.2.6.> */}
-      
+
+      {/* <VI.1.4.> */}
+      <Button
+        title="Show Posts from API"
+        onPress={() => navigation.navigate("ApiPosts")}
+      />
+      {/* </VI.1.4.> */}
+
       <FlatList
           data={events}
           keyExtractor={(item) => item.eventId.toString()}

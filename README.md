@@ -963,7 +963,7 @@ export default function DetailsScreen({ route }: any) {
 
 ## III.3. Configuring Stack Navigator
 
-### III.3.1. Open App.tsx (or [`index.tsx`](./my-app/app/(tabs)/index.tsx)) and replace the content with the following code
+### III.3.1. Open `index.tsx` (`App.tsx`) and replace the content with the following code
 
 [`app/(tabs)/index.tsx`](./my-app//app/(tabs)/index.tsx)
 
@@ -1017,7 +1017,7 @@ export type RootStackParamList = {
 };
 ```
 
-### III.4.2. Use the defined types in `App.tsx` (or [`index.tsx`](./my-app/app/(tabs)/index.tsx))
+### III.4.2. Use the defined types in Open `index.tsx` (`App.tsx`)
 
 [`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
@@ -2584,3 +2584,495 @@ import AddEventScreen from "@/screens/AddEventScreen"; // Add import for AddEven
 
       </Stack.Navigator>
 ```
+
+## **Lab VII: Fetching data from a public API (`fetch`, `useEffect`, `loading`, `error`)**
+
+## VII.1. API (Application Programming Interface)
+
+### VII.1.1 Project structure
+
+```bash
+components                                  # components/
+touch components/ApiPostItem.tsx            # └── ApiPostItem.tsx                 (VII.1.3.)
+mkdir -p screens                            # screens/                            (II.1.0.)
+touch screens/ApiPostsScreen.tsx            # └── ApiPostsScreen.tsx              (VII.1.4.)
+touch screens/ApiPostDetailsScreen.tsx      # └── ApiPostDetailsScreen.tsx        (VII.1.5.)
+mkdir -p styles                             # styles/                             (I.10.1.)
+touch styles/ApiPostItemStyles.tsx          # └── ApiPostItemStyles.tsx           (VII.1.3.)
+touch styles/ApiPostsScreenStyles.tsx       # └── ApiPostsScreenStyles.tsx        (VII.1.4.)
+touch styles/ApiPostDetailsScreenStyles.tsx # └── ApiPostDetailsScreenStyles.tsx  (VII.1.5.)
+mkdir -p types                              # types/                              (III.2.1.)
+touch types/Post.ts                         # └── Post.ts                         (VII.1.2.)
+```
+
+### VII.1.2. Create a type for the API data
+
+[`types/Post.ts`](./my-app/types/Post.ts)
+
+```tsx
+export type Post = {
+  userId: number;
+  id: number;
+  title: string;
+  body: string;
+};
+```
+
+### VII.1.3. Create a component of a single post item
+
+[`styles/ApiPostItemStyles.tsx`](./my-app/styles/ApiPostItemStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ffffff",
+    padding: 16,
+    marginHorizontal: 12,
+    marginVertical: 6,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+    textTransform: "capitalize",
+  },
+  body: {
+    fontSize: 14,
+    color: "#555",
+  },
+});
+```
+
+[`components/ApiPostItem.tsx`](./my-app/components/ApiPostItem.tsx)
+
+```tsx
+import { Pressable, Text} from "react-native";
+import { styles } from "../styles/ApiPostItemStyles";
+
+type ApiPostItemProps = {
+  title: string;
+  body: string;
+  onPress: () => void;
+};
+
+export default function ApiPostItem({
+  title,
+  body,
+  onPress,
+}: ApiPostItemProps) {
+  return (
+    <Pressable onPress={onPress} style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.body} numberOfLines={2}>
+        {body}
+      </Text>
+    </Pressable>
+  );
+}
+```
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+...
+export type RootStackParamList = {
+  ...
+  // Add RootStackParamList for API posts
+  ApiPosts: undefined;
+  ApiPostDetails: {
+    id: number;
+    title: string;
+    body: string;
+  };
+};
+```
+
+### VII.1.4. Create a screen to fetch data from the API
+
+[`styles/ApiPostsScreenStyles.tsx`](./my-app/styles/ApiPostsScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+    paddingTop: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  infoText: {
+    marginTop: 12,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: "red",
+    textAlign: "center",
+    marginHorizontal: 20,
+  },
+});
+```
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+import { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
+import { Post } from "../types/Post";
+import ApiPostItem from "../components/ApiPostItem";
+import { styles } from "../styles/ApiPostsScreenStyles";
+import { RootStackParamList } from "../types/Navigation";
+
+type ApiPostsScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "ApiPosts">;
+};
+
+export default function ApiPostsScreen({ navigation }: ApiPostsScreenProps) {
+  const [posts, setPosts] = useState<Post[]>([]);             // Data state for posts
+  const [isLoading, setIsLoading] = useState<boolean>(true);  // State for loading status
+  const [error, setError] = useState<string>("");             // State for error message
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setIsLoading(true);
+        setError("");
+
+        // A built-in way to perform HTTP requests
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/posts"
+        );
+
+        // A good practice to check if the response is successful before trying to parse it
+        if (!response.ok) {
+          throw new Error("Failed to fetch data from server.");
+        }
+
+        // Convert the JSON response to a JS/TS object:
+        const data: Post[] = await response.json();
+        setPosts(data);
+      } catch (err) {
+        setError("An error occurred while fetching data.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+        <Text style={styles.infoText}>Loading data...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Posts from API</Text>
+
+      <FlatList
+        data={posts}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <ApiPostItem
+            title={item.title}
+            body={item.body}
+            onPress={() =>
+              navigation.navigate("ApiPostDetails", {
+                id: item.id,
+                title: item.title,
+                body: item.body,
+              })
+            }
+          />
+        )}
+      />
+    </View>
+  );
+}
+```
+
+### VII.1.5. Create a screen for post details from the API
+
+[`styles/ApiPostDetailsScreenStyles.tsx`](./my-app/styles/ApiPostDetailsScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textTransform: "capitalize",
+  },
+  meta: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 12,
+  },
+  body: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: "#333",
+  },
+});
+```
+
+[`screens/ApiPostDetailsScreen.tsx`](./my-app/screens/ApiPostDetailsScreen.tsx)
+
+```tsx
+import { View, Text } from "react-native";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "../types/Navigation";
+import { styles } from "../styles/ApiPostDetailsScreenStyles";
+
+type ApiPostDetailsRouteProp = RouteProp<RootStackParamList, "ApiPostDetails">;
+
+type ApiPostDetailsScreenProps = { route: ApiPostDetailsRouteProp };
+
+export default function ApiPostDetailsScreen({
+  route,
+}: ApiPostDetailsScreenProps) {
+  const { id, title, body } = route.params;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.meta}>Post ID: {id}</Text>
+      <Text style={styles.body}>{body}</Text>
+    </View>
+  );
+}
+```
+
+### VII.1.6. Update `index.tsx` (`App.tsx`)
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+// Import the new screens for API posts
+import ApiPostsScreen from "../../screens/ApiPostsScreen";
+import ApiPostDetailsScreen from "../../screens/ApiPostDetailsScreen";
+...
+
+export default function App() {
+  
+  return (
+      <Stack.Navigator>
+        ...
+
+        // Add new screens to the navigator
+        <Stack.Screen
+          name="ApiPosts"
+          component={ApiPostsScreen}
+          options={{ title: "Posts from API" }}
+        />
+        <Stack.Screen
+          name="ApiPostDetails"
+          component={ApiPostDetailsScreen}
+          options={{ title: "Post details" }}
+        />
+
+      </Stack.Navigator>
+  );
+}
+```
+
+### VII.1.7. Add navigation from `Home` to `ApiPosts`
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+  return (
+    <View style={styles.container}>
+      ...
+
+      <Button
+        title="Show Posts from API"
+        onPress={() => navigation.navigate("ApiPosts")}
+      />
+      ...
+```
+
+## VII.2. Practice tasks
+
+### VII.2.1. Limit the list to the first 10 posts
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+...
+  return (
+    <View style={styles.container}>
+      ...
+
+      <FlatList
+        data={posts.slice(0, 10)} //  posts -> posts.slice(0, 10)
+        ...
+      />
+    </View>
+  );
+  ...
+```
+
+### VII.2.2. Display the ID number in `ApiPostItem`
+
+[`styles/ApiPostItemStyles.tsx`](./my-app/styles/ApiPostItemStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  id: {
+    fontSize: 12,
+    color: "#999",
+    marginBottom: 4,
+  },
+});
+```
+
+[`components/ApiPostItem.tsx`](./my-app/components/ApiPostItem.tsx)
+
+```tsx
+...
+type ApiPostItemProps = {
+  title: string;
+  id: number; // Add id to props
+  ...
+};
+
+export default function ApiPostItem({
+  title,
+  id, // Add id
+  ...
+
+}: ApiPostItemProps) {
+  return (
+    <Pressable onPress={onPress} style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.id}>Post ID: {id}{/* Add ID display */}</Text> 
+      ...
+      </Text>
+    </Pressable>
+  );
+}
+```
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+...
+          <ApiPostItem
+            title={item.title}
+            id={item.id} // Pass id to ApiPostItem
+            ...
+          />
+...
+```
+
+### VII.2.3. Add information about the number of fetched posts in the header
+
+```tsx
+...
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Posts from API: {posts.length}{/* Add : {posts.length} to header` */}</Text>  
+        ...
+  )
+  ...
+```
+
+### VII.2.4. Change the error message to be more user-friendly
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+...
+      setError("Oops! We couldn't load the posts. Please check your internet connection and try again."); // Update error message
+...
+```
+
+## VII.3. What happens, does the error screen work correctly?
+
+### VII.3.1. Change the API endpoint to an invalid one and check
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+...
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/invalidendpoint" // Change to an invalid endpoint
+        );
+...
+```
+
+### VII.3.2. Run the app and navigate to the API posts screen
+
+```bash
+npm start
+```
+
+## VII.3.3. Click on the "Show Posts from API" button to trigger the fetch request
+
+### VII.3.4. Expect to see
+
+`Oops! We couldn't load the posts. Please check your internet connection and try again.`
+
+### VII.3.5. Back to the code and change the endpoint back to the correct one
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+...
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/posts" // Change back to the correct endpoint
+        );
+...
+```
+
+* Please double check that posts are loading correctly and without errors (if not check your internet connection)
+
+## VII.4. Additional tasks
+
+### VII.4.1. Skipping additional tasks
+
+* They will be covered in the next labs

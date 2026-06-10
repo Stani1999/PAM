@@ -1,4 +1,8 @@
 // Lab III.3.1.
+// <VII.1.6.>
+import ApiPostsScreen from "../../screens/ApiPostsScreen";
+import ApiPostDetailsScreen from "../../screens/ApiPostDetailsScreen";
+// </VII.1.6.>
 import AddEventScreen from "@/screens/AddEventScreen"; // <VI.2.6./>
 import { RootStackParamList } from "../../types/Navigation"; // <III.4.2/>
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -32,6 +36,19 @@ export default function App() {
           options={{ title: "Add Event" }} 
         />
         {/* </VI.2.6.> */}
+
+        {/* <VII.1.6.> */}
+        <Stack.Screen
+          name="ApiPosts"
+          component={ApiPostsScreen}
+          options={{ title: "Posts from API" }}
+        />
+        <Stack.Screen
+          name="ApiPostDetails"
+          component={ApiPostDetailsScreen}
+          options={{ title: "Post details" }}
+        />
+        {/* </VII.1.6.> */}
 
       </Stack.Navigator>
   );
