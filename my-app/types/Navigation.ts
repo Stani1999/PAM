@@ -23,4 +23,6 @@ export type RootStackParamList = {
     body: string;
   };
   // </VII.1.3.>
+  Users: undefined; // <VIII.1.6./>
+  Todos: undefined; // <VIII.2.4./>
 };

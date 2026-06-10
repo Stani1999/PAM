@@ -1,4 +1,6 @@
 // Lab III.3.1.
+import TodosScreen from "@/screens/TodosScreen"; // <VIII.2.4./>
+import UsersScreen from "../../screens/UsersScreen"; // <VIII.1.7.>
 // <VII.1.6.>
 import ApiPostsScreen from "../../screens/ApiPostsScreen";
 import ApiPostDetailsScreen from "../../screens/ApiPostDetailsScreen";
@@ -50,23 +52,39 @@ export default function App() {
         />
         {/* </VII.1.6.> */}
 
+        {/* <VIII.1.7.> */}
+        <Stack.Screen
+          name="Users"
+          component={UsersScreen}
+          options={{ title: "Users" }}
+        />
+        {/* </VIII.1.7.> */}
+
+        {/* <VIII.2.4.> */}
+        <Stack.Screen
+          name="Todos"
+          component={TodosScreen}
+          options={{ title: "To-Do List" }}
+        />
+        {/* </VIII.2.4.> */}
+
       </Stack.Navigator>
   );
 }
 
 // <III.3.1.>
-// // Lab I.7.1.
-// import { Footer } from '@/components/Footer';  // <I.10.3./>
-// import { Header } from '@/components/Header';  // <I.9.3./>
+// // Lab I.8.1.
+// import { Footer } from '@/components/Footer';  // <I.11.3./>
+// import { Header } from '@/components/Header';  // <I.10.3./>
 // import { styles } from '@/styles/indexStyles';
 // import ListItem from '@/components/ListItem';  // <II.1.3./>
-// // <I.8.1.>
-// import { // StyleSheet, < I.10.1./>
+// // <I.10.1.>
+// import { // StyleSheet, < I.11.1./>
 //   Text, View, Button,
 //    ScrollView // II.1.3.
 // } from 'react-native';
 // import { useState } from 'react';
-// // </I.8.1.>
+// // </I.10.1.>
 
 
 // export default function App() {
@@ -93,17 +111,17 @@ export default function App() {
 //   // </II.1.3.>
 //   return (
 //     <View style={styles.container}>
-//       {/* <II.1.1.> <Header/> {/* <I.9.3./> 
+//       {/* <II.1.1.> <Header/> {/* <I.10.3./> 
 //       <Text style={styles.title}>Smart Campus</Text> */}
 //       <Header title = "Smart Campus"/>
 //       {/* </II.1.1.> */}
 //       <Text style={styles.subtitle}>My first mobile application</Text>
-//       {/* <I.8.1.> */}
+//       {/* <I.10.1.> */}
 //       <Text style={styles.title}>Counter:</Text>
 //       <Text style={styles.counter}>{count}</Text>
 //       <Button title="Increase" onPress={() => setCount(count + 1)} />
-//       {/* </I.8.1.> */}
-//       <Button title="Decrease" onPress={() => setCount(count - 1)} /> {/* <I.10.2./> */}
+//       {/* </I.10.1.> */}
+//       <Button title="Decrease" onPress={() => setCount(count - 1)} /> {/* <I.11.2./> */}
 //       {/* <II.1.3.> */}
 //       <ScrollView>
 //         {events.map(event => (
@@ -117,13 +135,13 @@ export default function App() {
 //         ))}
 //       </ScrollView>
 //       {/* </II.1.3.> */}
-//       <Footer /> {/* <I.10.3./> */}
+//       <Footer /> {/* <I.11.3./> */}
 //     </View>
 //   );
 // }
 // </III.3.1.>
 
-// <I.10.1.>
+// <I.11.1.>
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
@@ -139,12 +157,12 @@ export default function App() {
 //     fontSize: 16,
 //     marginTop: 10,
 //   },
-//   // <I.8.1.>
+//   // <I.10.1.>
 //   counter: {
 //     fontSize: 24,
 //     fontWeight: 'bold',
 //     marginTop: 10,
 //   },
-//   // </I.8.1.>
-// </I.10.1.>
+//   // </I.10.1.>
+// </I.11.1.>
 //});

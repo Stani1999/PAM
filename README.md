@@ -212,7 +212,7 @@ adb devices
 ### I.6.1. Kill emulator processes
 
 ```bash
-pkill -f emulator`
+pkill -f emulator
 ```
 
 ### I.6.2. Factory reset
@@ -229,13 +229,13 @@ Run the emulator with the `-no-snapshot-load` option to disable loading snapshot
 emulator -avd pixel_9_36 -no-snapshot-load
 ```
 
-* On emulator rigth bar -> click on `...`  -> Snapshot -> Take Snapshot
+* On emulator right bar -> click on `...`  -> Snapshot -> Take Snapshot
 
 * Go to Settings in Snapshot and uncheck `Auto-save current state to Quickboot` -> No
 
 * On pop-up click `yes`. Emulator will restart and load the default state instead of the snapshot
 
-## I.6.4. Performance Tuning `nano ~/.android/avd/pixel_9_36.avd/config.ini`
+### I.6.4. Performance Tuning `nano ~/.android/avd/pixel_9_36.avd/config.ini`
 
 ```bash
 ...
@@ -258,7 +258,7 @@ vm.heapSize=512 # or 512 for 512MB (per application)
 
 [`tsconfig.json`](./my-app/tsconfig.json) TypeScript configuration
 
-### I.6.2. Style by StyleSheet
+### I.7.2. Style by StyleSheet
 
 ```tsx
 const styles = StyleSheet.create({
@@ -271,9 +271,9 @@ const styles = StyleSheet.create({
 });
 ```
 
-### I.7. Exercise 1 - Create screen
+## I.8. Exercise 1 - Create screen
 
-### I.7.1. Replace [`index.tsx`](./my-app/app/(tabs)/index.tsx) content with the following code
+### I.8.1. Replace [`index.tsx`](./my-app/app/(tabs)/index.tsx) content with the following code
 
 [`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-### I.7.2. Run the application to see the changes
+### I.8.2. Run the application to see the changes
 
 ```bash
 npm start
@@ -321,9 +321,9 @@ npm start
 
 * In case of issues back to [`I.6.`](#i6-in-case-of-issues)
 
-## I.8. Interactivity - useState
+## I.9. Interactivity - useState
 
-### I.8.1. Add simple interactivity to the screen, change [`index.tsx`](./my-app/app/(tabs)/index.tsx) content to the following code
+### I.9.1. Add simple interactivity to the screen, change [`index.tsx`](./my-app/app/(tabs)/index.tsx) content to the following code
 
 [`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
@@ -357,19 +357,19 @@ const styles = StyleSheet.create({
 })
 ```
 
-### I.8.2. Test the application
+### I.9.2. Test the application
 
 * If application wasn't turned off, it should automatically reload
 
-## I.9. Exercise 2 - Custom Component
+## I.10. Exercise 2 - Custom Component
 
-### I.9.1. Create a new file `components/Header.tsx`
+### I.10.1. Create a new file `components/Header.tsx`
 
 ```bash
 touch components/Header.tsx
 ```
 
-### I.9.2. Add the following code to [`components/Header.tsx`](./my-app/components/Header.tsx)
+### I.10.2. Add the following code to [`components/Header.tsx`](./my-app/components/Header.tsx)
 
 [`components/Header.tsx`](./my-app/components/Header.tsx)
 
@@ -385,7 +385,7 @@ export function Header() {
 }
 ```
 
-### I.9.3. Import and use the `Header` component in [`index.tsx`](./my-app/app/(tabs)/index.tsx)
+### I.10.3. Import and use the `Header` component in [`index.tsx`](./my-app/app/(tabs)/index.tsx)
 
 [`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
@@ -407,7 +407,7 @@ export default function App() {
 
 * If application wasn't turned off, it should automatically reload
 
-### I.9.4. Commit the changes to Git
+### I.10.4. Commit the changes to Git
 
 ```bash
 git init # if not already initialized
@@ -415,13 +415,13 @@ git add .
 git commit -m "Lab 1 - RN basics"
 ```
 
-## I.10. Homework
+## I.11. Homework
 
-### I.10.1. Change the background color of application
+### I.11.1. Change the background color of application
 
 ```bash
-mkdir -p styles             # styles                      (I.10.1.)
-touch styles/indexStyles.ts # └── indexStyles.ts          (I.10.1.)
+mkdir -p styles             # styles                      (I.11.1.)
+touch styles/indexStyles.ts # └── indexStyles.ts          (I.11.1.)
 ```
 
 * Move the `styles` object from [`index.tsx`](./my-app/app/(tabs)/index.tsx) to [`styles/indexStyles.ts`](./my-app/styles/indexStyles.ts)
@@ -462,7 +462,7 @@ export const styles = StyleSheet.create({ // Add prefix export
 });
 ```
 
-### I.10.2. Add second button "decrease"
+### I.11.2. Add second button "decrease"
 
 [`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
 
@@ -480,7 +480,7 @@ export default function App() {
 }
 ```
 
-### I.10.3. Add component [`Footer`](./my-app/components/Footer.tsx) with StyleSheet in [`FooterStyles.tsx`](./my-app/styles/FooterStyles.tsx)
+### I.11.3. Add component [`Footer`](./my-app/components/Footer.tsx) with StyleSheet in [`FooterStyles.tsx`](./my-app/styles/FooterStyles.tsx)
 
 ```bash
 touch styles/FooterStyles.tsx
@@ -541,7 +541,7 @@ export default function App() {
 }
 ```
 
-### I.10.4. Test the application
+### I.11.4. Test the application
 
 ```bash
 npm start
@@ -550,12 +550,14 @@ a # to open Android emulator
 
 * If application wasn't turned off, it should automatically reload
 
-### I.10.5. Commit the changes to Git
+### I.11.5. Commit the changes to Git
 
 ```bash
 git add .
 git commit -m "Lab 1 - RN basics+"
 ```
+
+---
 
 ## **Lab II: Components, Props, Project Structure**
 
@@ -565,13 +567,13 @@ git commit -m "Lab 1 - RN basics+"
 
 ```bash
                                 # components              
-touch components/Header.tsx     # ├── Header.tsx          (I.9.3.)
-touch components/Footer.tsx     # ├── Footer.tsx          (I.10.3.)
+touch components/Header.tsx     # ├── Header.tsx          (I.10.3.)
+touch components/Footer.tsx     # ├── Footer.tsx          (I.11.3.)
 touch components/ListItem.tsx   # └── ListItem.tsx        (II.1.2.)
 mkdir -p screens                # screens                 (II.1.0.)
-mkdir -p styles                 # styles                  (I.10.1.)
-touch styles/indexStyles.tsx    # ├── indexStyles.tsx     (I.10.2.)
-touch styles/FooterStyles.tsx   # ├── FooterStyles.tsx    (I.10.3.)
+mkdir -p styles                 # styles                  (I.11.1.)
+touch styles/indexStyles.tsx    # ├── indexStyles.tsx     (I.11.2.)
+touch styles/FooterStyles.tsx   # ├── FooterStyles.tsx    (I.11.3.)
 touch styles/HeaderStyles.tsx   # ├── HeaderStyles.tsx    (II.1.1.)
 touch styles/ListItemStyles.tsx # └── ListItemStyles.tsx  (II.1.2.)
 ```
@@ -607,7 +609,7 @@ type HeaderProps = {
   title: string;
 };
 
-export default function Header({ title }: HeaderProps) // add props in () { 
+export default function Header({ title }: HeaderProps) { // add props in ()  
   return (
     <View style={styles.container}> // add style = {styles.container}
       <Text style={styles.title}>{title}</Text> // replace old Text
@@ -689,7 +691,7 @@ import { ..., ScrollView // Add ScrollView import
   ];
   ...
 
-  <view style={styles.container}>
+  <View style={styles.container}>
     ...
     <ScrollView>
       {events.map(event => (
@@ -840,6 +842,8 @@ export default function ListItem({ ... isHighlighted }: ListItemProps) { // add 
   ...
 ```
 
+---
+
 ## **Lab III: Navigation and Multi-screen Application (React Navigation + TypeScript)**
 
 ## III.1. Installation of React Navigation
@@ -870,7 +874,7 @@ npm install @react-navigation/native-stack
 mkdir -p screens                    # screens                     (II.1.0.)
 touch screens/HomeScreen.tsx        # ├── HomeScreen.tsx          (III.2.2.)
 touch screens/DetailScreen.tsx      # └── DetailScreen.tsx        (III.2.3.)
-mkdir -p styles                     # styles                      (I.10.1.)
+mkdir -p styles                     # styles                      (I.11.1.)
 touch styles/HomeScreenStyles.tsx   # ├── HomeScreenStyles.tsx    (III.2.2.)
 touch styles/DetailScreenStyles.tsx # └── DetailScreenStyles.tsx  (III.2.3.)
 mkdir -p types                      # types                       (III.2.1.)
@@ -1003,7 +1007,7 @@ a # to open Android emulator
 
 ## III.4. Typing routing
 
-### III.4.1. Add types for navigation in `types/Navigation.ts` (insted of in `index.tsx`)
+### III.4.1. Add types for navigation in `types/Navigation.ts` (instead of in `index.tsx`)
 
 [`types/Navigation.ts`](./my-app/types/Navigation.ts)
 
@@ -1248,6 +1252,8 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
     </View>
     ...
 ```
+
+---
 
 ## **Lab IV: FlatList and dynamic data rendering**
 
@@ -1583,7 +1589,7 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 }
 ```
 
-### VI.3.5. Optional - Add time to the ListItem component and render it on the card
+### IV.3.5. Optional - Add time to the ListItem component and render it on the card
 
 [`styles/ListItemStyles.tsx`](./my-app/styles/ListItemStyles.tsx)
 
@@ -1631,6 +1637,8 @@ export default function ListItem({ ..., time, ... }: ListItemProps) {
             />
           ...            
 ```
+
+---
 
 ## **Lab V: Project structure, separation of data and types**
 
@@ -1719,9 +1727,9 @@ Already done in the previous steps [`IV.3.1`](#iv31-update-types-types-to-includ
 
 ## V.2. Practical tasks
 
-### V.2.1. Make Navigation.ts (Aditional)
+### V.2.1. Make Navigation.ts (Additional)
 
-Already done in the previous steps ([`III.4.1.`](#iii41-add-types-for-navigation-in-typesnavigationts-insted-of-in-indextsx) and [`III.5.1.`](#iii51-type-navigation-in-homescreen))
+Already done in the previous steps ([`III.4.1.`](#iii41-add-types-for-navigation-in-typesnavigationts-instead-of-in-indextsx) and [`III.5.1.`](#iii51-type-navigation-in-homescreen))
 
 ### V.2.2. Add new field `Event:` - `date: string`
 
@@ -1860,13 +1868,13 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 
 **For styles (`/styles` directory):**
 
-* [`I.10.1.`](#i101-change-the-background-color-of-application) – [`I.10.3.`](#i103-add-component-footer-with-stylesheet-in-footerstylestsx) (creation of the directory and initial style files, e.g., for Footer)
+* [`I.11.1.`](#i111-change-the-background-color-of-application) – [`I.11.3.`](#i113-add-component-footer-with-stylesheet-in-footerstylestsx) (creation of the directory and initial style files, e.g., for Footer)
 * [`II.1.0.`](#ii10-create-this-structure-in-main-directory) – [`II.1.2.`](#ii12-create-new-component-listitem) (additional styles: Header, ListItem)
 * [`III.2.1.`](#iii21-create-screens-directory-and-files) – [`III.2.3.`](#iii23-create-detailscreen) (styles for Home and Detail screens)
 
 **For types (`/types` directory):**
 
-* [`III.4.1.`](#iii41-add-types-for-navigation-in-typesnavigationts-insted-of-in-indextsx) (creation of the directory and `Navigation.ts`)
+* [`III.4.1.`](#iii41-add-types-for-navigation-in-typesnavigationts-instead-of-in-indextsx) (creation of the directory and `Navigation.ts`)
 * [`V.1.1.`](#v11-new-project-structure) – [`V.1.2.`](#v12-event-type-separation) (extraction of `Event.ts`)
 
 ### V.3.2. Add category field to the types (before adding new events)
@@ -2019,6 +2027,8 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 }
 ```
 
+---
+
 ## **Lab VI: Forms and adding data to a list**
 
 ## VI.1. Events list as starting point
@@ -2028,8 +2038,8 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 ```bash
                                       # components              
 touch components/AddEventForm.tsx     # └── AddEventForm.tsx          (VI.1.2.)
-mkdir -p styles                       # styles                        (VI.1.10.)
-touch styles/AddEventFormStyles.tsx # └── AddEventFormStyles.tsx      (VI.1.2.)
+mkdir -p styles                       # styles                        (I.11.1.)
+touch styles/AddEventFormStyles.tsx   # └── AddEventFormStyles.tsx    (VI.1.2.)
 mkdir -p screens                      # screens                       (II.1.0.)
 touch screens/AddEventScreen.tsx      # └── AddEventScreen.tsx        (VI.2.6.)
 ```
@@ -2065,7 +2075,7 @@ export const events: EventItem[] = [
 
 ```
 
-### V.1.2. To maintain the functionality of isHighlighted, it will be implemented as a style change for the event when hovered over (hover)
+### VI.1.2. To maintain the functionality of isHighlighted, it will be implemented as a style change for the event when hovered over (hover)
 
 [`components/ListItem.tsx`](./my-app/components/ListItem.tsx)
 
@@ -2104,9 +2114,9 @@ export default function ListItem({ title, description,
 ...
             <ListItem
               title={item.title}
-              category={item.category} /* <V.3.4./> */
-              time={item.time} /* <IV.3.5./> */
-              date={item.date} /* <V.2.4./> */
+              category={item.category}
+              time={item.time} 
+              date={item.date}
               description={item.description}
               location={item.location}
               // isHighlighted={item.isHighlighted} // Remove this prop
@@ -2266,7 +2276,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
 ### VI.1.5. Update ListItem
 
-Already updated in the previous step [`VI.1.2.`](#iv12-creating-an-events-list-in-homescreen)
+Already updated in the previous step [`VI.1.2.`](#vi12-to-maintain-the-functionality-of-ishighlighted-it-will-be-implemented-as-a-style-change-for-the-event-when-hovered-over-hover)
 
 ### VI.1.6. Update DetailsScreen
 
@@ -2382,7 +2392,7 @@ export default function AddEventForm({ onAddEvent }: AddEventFormProps) {
 export default function DetailsScreen({ route }: DetailsScreenProps) {
   const { 
     ...
-    speaker // <VI.2.1./>
+    speaker // Add speaker to route parameters
   } = route.params; 
   return (
     <View style={styles.container}>
@@ -2543,7 +2553,7 @@ export default function AddEventScreen({ navigation, route }: Props) {
 }
 ```
 
-Update [`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
 
 ```tsx
 ...
@@ -2585,6 +2595,8 @@ import AddEventScreen from "@/screens/AddEventScreen"; // Add import for AddEven
       </Stack.Navigator>
 ```
 
+---
+
 ## **Lab VII: Fetching data from a public API (`fetch`, `useEffect`, `loading`, `error`)**
 
 ## VII.1. API (Application Programming Interface)
@@ -2592,14 +2604,14 @@ import AddEventScreen from "@/screens/AddEventScreen"; // Add import for AddEven
 ### VII.1.1 Project structure
 
 ```bash
-components                                  # components/
+                                            # components/
 touch components/ApiPostItem.tsx            # └── ApiPostItem.tsx                 (VII.1.3.)
 mkdir -p screens                            # screens/                            (II.1.0.)
-touch screens/ApiPostsScreen.tsx            # └── ApiPostsScreen.tsx              (VII.1.4.)
+touch screens/ApiPostsScreen.tsx            # ├── ApiPostsScreen.tsx              (VII.1.4.)
 touch screens/ApiPostDetailsScreen.tsx      # └── ApiPostDetailsScreen.tsx        (VII.1.5.)
-mkdir -p styles                             # styles/                             (I.10.1.)
-touch styles/ApiPostItemStyles.tsx          # └── ApiPostItemStyles.tsx           (VII.1.3.)
-touch styles/ApiPostsScreenStyles.tsx       # └── ApiPostsScreenStyles.tsx        (VII.1.4.)
+mkdir -p styles                             # styles/                             (I.11.1.)
+touch styles/ApiPostItemStyles.tsx          # ├── ApiPostItemStyles.tsx           (VII.1.3.)
+touch styles/ApiPostsScreenStyles.tsx       # ├── ApiPostsScreenStyles.tsx        (VII.1.4.)
 touch styles/ApiPostDetailsScreenStyles.tsx # └── ApiPostDetailsScreenStyles.tsx  (VII.1.5.)
 mkdir -p types                              # types/                              (III.2.1.)
 touch types/Post.ts                         # └── Post.ts                         (VII.1.2.)
@@ -2760,17 +2772,14 @@ export default function ApiPostsScreen({ navigation }: ApiPostsScreenProps) {
         setIsLoading(true);
         setError("");
 
-        // A built-in way to perform HTTP requests
         const response = await fetch(
           "https://jsonplaceholder.typicode.com/posts"
         );
 
-        // A good practice to check if the response is successful before trying to parse it
         if (!response.ok) {
           throw new Error("Failed to fetch data from server.");
         }
 
-        // Convert the JSON response to a JS/TS object:
         const data: Post[] = await response.json();
         setPosts(data);
       } catch (err) {
@@ -2894,9 +2903,6 @@ import ApiPostsScreen from "../../screens/ApiPostsScreen";
 import ApiPostDetailsScreen from "../../screens/ApiPostDetailsScreen";
 ...
 
-export default function App() {
-  
-  return (
       <Stack.Navigator>
         ...
 
@@ -2913,8 +2919,6 @@ export default function App() {
         />
 
       </Stack.Navigator>
-  );
-}
 ```
 
 ### VII.1.7. Add navigation from `Home` to `ApiPosts`
@@ -2926,10 +2930,12 @@ export default function App() {
     <View style={styles.container}>
       ...
 
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
       <Button
         title="Show Posts from API"
         onPress={() => navigation.navigate("ApiPosts")}
       />
+      </View>
       ...
 ```
 
@@ -3076,3 +3082,622 @@ npm start
 ### VII.4.1. Skipping additional tasks
 
 * They will be covered in the next labs
+
+---
+
+## **Lab VIII: Custom hook `useFetch` and separation of logic from UI**
+
+## VIII.1. Refactor API with custom hook and separate UI components
+
+### VIII.1.1. Update the project structure
+
+```bash
+                                            # components/
+touch components/UserItem.tsx               # └── UserItem.tsx                    (VIII.1.5.)
+touch components/TodoItem.tsx               # └── TodoItem.tsx                    (VIII.2.2.)
+                                            # hooks/                              
+touch hooks/useFetch.ts                     # └── useFetch.ts                     (VIII.1.2.)
+mkdir -p screens                            # screens/                            (II.1.0.)
+touch screens/UsersScreen.tsx               # ├── UsersScreen.tsx                 (VIII.1.6.)
+touch screens/TodosScreen.tsx               # └── TodosScreen.tsx                 (VIII.2.3.)
+mkdir -p styles                             # styles/                             (I.11.1.)
+touch styles/UserItemStyles.tsx             # ├── UserItemStyles.tsx              (VIII.1.5.)
+touch styles/UsersScreenStyles.tsx          # ├── UsersScreenStyles.tsx           (VIII.1.6.)
+touch styles/TodoItemStyles.tsx             # ├── TodoItemStyles.tsx              (VIII.2.2.)
+touch styles/TodosScreenStyles.tsx          # └── TodosScreenStyles.tsx           (VIII.2.3.)
+mkdir -p types                              # types/                              (III.2.1.)
+touch types/User.ts                         # ├── User.ts                         (VIII.1.4.)
+touch types/Todo.ts                         # └── Todo.ts                         (VIII.2.1.)
+```
+
+### VIII.1.2. Create hook `useFetch`
+
+[`hooks/useFetch.ts`](./my-app/hooks/useFetch.ts)
+
+```tsx
+import { useEffect, useState } from "react";
+
+type UseFetchResult<T> = {
+  data: T | null;
+  isLoading: boolean;
+  error: string;
+};
+
+export function useFetch<T>(url: string): UseFetchResult<T> {
+  const [data, setData] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        setError("");
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data from server.");
+        }
+
+        const json = (await response.json()) as T;
+        setData(json);
+      } catch (err) {
+        setError("Failed to fetch data from server.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return {
+    data,
+    isLoading,
+    error,
+  };
+}
+```
+
+### VIII.1.3. Refactor ApiPostsScreen
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+// Add import for useFetch hook from VIII.1.2.
+import { useFetch } from "../hooks/useFetch";
+// Remove import { useEffect, useState } from "react";
+...
+
+export default function ApiPostsScreen({ navigation }: ApiPostsScreenProps) {
+  
+  // Remove useState and useEffect logic:
+  // const [posts, setPosts] = useState...
+  // const [isLoading, setIsLoading] = useState...
+  // const [error, setError] = useState...
+  // useEffect(...)
+
+  // Add useFetch hook to fetch posts:
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useFetch<Post[]>("https://jsonplaceholder.typicode.com/posts");
+
+  if (isLoading) {...}
+...
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Posts from API: {posts?.length ?? 0}{/* posts.length -> posts?.length ?? 0 */}</Text>
+
+      <FlatList
+        data={posts ? posts.slice(0, 10) : []} // posts.slice(0, 10) -> posts ? posts.slice(0, 10) : []
+        ...
+}
+```
+
+### VIII.1.4. Add second data type: `User`
+
+[`types/User.ts`](./my-app/types/User.ts)
+
+```tsx
+export type User = {
+    id: number;
+    name: string;
+    username: string;
+    email: string;
+    phone: string;
+    website: string;
+};
+```
+
+### VIII.1.5. Create a user item component
+
+[`styles/UserItemStyles.tsx`](./my-app/styles/UserItemStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ffffff",
+    padding: 16,
+    marginHorizontal: 12,
+    marginVertical: 6,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  username: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 4,
+  },
+  email: {
+    fontSize: 14,
+    color: "#333",
+    marginTop: 8,
+  },
+});
+```
+
+[`components/UserItem.tsx`](./my-app/components/UserItem.tsx)
+
+```tsx
+import { Pressable, Text } from "react-native";
+import { styles } from "../styles/UserItemStyles";
+
+type UserItemProps = {
+  name: string;
+  email: string;
+  username: string;
+  onPress: () => void;
+};
+
+export default function UserItem({
+  name,
+  email,
+  username,
+  onPress,
+}: UserItemProps) {
+  return (
+    <Pressable onPress={onPress} style={styles.container}>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.username}>@{username}</Text>
+      <Text style={styles.email}>{email}</Text>
+    </Pressable>
+  );
+}
+```
+
+### VIII.1.6. Create a users screen
+
+[`styles/UsersScreenStyles.tsx`](./my-app/styles/UsersScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+    paddingTop: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  infoText: {
+    marginTop: 12,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: "red",
+    textAlign: "center",
+    marginHorizontal: 20,
+  },
+});
+```
+
+[`screens/UsersScreen.tsx`](./my-app/screens/UsersScreen.tsx)
+
+```tsx
+import {
+  View,
+  Text,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
+import { User } from "../types/User";
+import UserItem from "../components/UserItem";
+import { useFetch } from "../hooks/useFetch";
+import { styles } from "../styles/UsersScreenStyles";
+
+export default function UsersScreen() {
+  const {
+    data: users,
+    isLoading,
+    error,
+  } = useFetch<User[]>("https://jsonplaceholder.typicode.com/users");
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+        <Text style={styles.infoText}>Loading users...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Users</Text>
+
+      <FlatList
+        data={users ?? []}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <UserItem
+            name={item.name}
+            username={item.username}
+            email={item.email}
+            onPress={() => console.log("Clicked user:", item.id)}
+          />
+        )}
+      />
+    </View>
+  );
+}
+```
+
+### VIII.1.7. Add navigation to UsersScreen
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+...
+export type RootStackParamList = {
+...
+  Users: undefined; // Add Users screen to RootStackParamList
+};
+```
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+import UsersScreen from "../../screens/UsersScreen"; // Add import for UsersScreen
+...
+
+      <Stack.Navigator>
+        ...
+        {/* Add Users screen */}
+        <Stack.Screen
+          name="Users"
+          component={UsersScreen}
+          options={{ title: "Users" }}
+        />
+
+      </Stack.Navigator>
+```
+
+### VIII.1.8. Add navigation from HomeScreen
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+  return (
+    <View style={styles.container}>
+      ...
+
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <Button
+        title="Show Users from API"
+        onPress={() => navigation.navigate("Users")}
+      />
+      </View>
+      ...
+```
+
+## VIII.2. Practice tasks add `ToDo` to application
+
+### VIII.2.1. Create a type for Todo
+
+[`types/Todo.ts`](./my-app/types/Todo.ts)
+
+```tsx
+export type Todo = {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+};
+```
+
+### VIII.2.2. Create a Todo item component (2. For each task show: title and status)
+
+[`styles/TodoItemStyles.tsx`](./my-app/styles/TodoItemStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ffffff",
+    padding: 16,
+    marginHorizontal: 12,
+    marginVertical: 6,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+    textTransform: "capitalize",
+  },
+  status: {
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  completed: {
+    color: "#28a745",
+  },
+  pending: {
+    color: "#dc3545",
+  },
+});
+```
+
+[`components/TodoItem.tsx`](./my-app/components/TodoItem.tsx)
+
+```tsx
+import { View, Text } from "react-native";
+import { styles } from "../styles/TodoItemStyles";
+
+type TodoItemProps = {
+  title: string;
+  status: boolean;
+};
+
+export default function TodoItem({ title, status }: TodoItemProps) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.status, status ? styles.completed : styles.pending]}>
+        Status: {status ? "Completed" : "Pending"}
+      </Text>
+    </View>
+  );
+}
+```
+
+### VIII.2.3. Create a Todos screen (1. Display the list of tasks separate screen; 3. Limit the number of displayed todos to 20)
+
+[`styles/TodosScreenStyles.tsx`](./my-app/styles/TodosScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+    paddingTop: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  infoText: {
+    marginTop: 12,
+    fontSize: 16,
+  },
+  errorText: {
+    fontSize: 16,
+    color: "red",
+    textAlign: "center",
+    marginHorizontal: 20,
+  },
+});
+```
+
+[`screens/TodosScreen.tsx`](./my-app/screens/TodosScreen.tsx)
+
+```tsx
+import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import { Todo } from "../types/Todo";
+import TodoItem from "../components/TodoItem";
+import { useFetch } from "../hooks/useFetch";
+import { styles } from "../styles/TodosScreenStyles";
+
+export default function TodosScreen() {
+  const {
+    data: todos,
+    isLoading,
+    error,
+  } = useFetch<Todo[]>("https://jsonplaceholder.typicode.com/todos");
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" />
+        <Text style={styles.infoText}>Loading todos...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.centered}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>To-Do List</Text>
+
+      <FlatList
+        data={todos ? todos.slice(0, 20) : []}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TodoItem
+            title={item.title}
+            status={item.completed}
+          />
+        )}
+      />
+    </View>
+  );
+}
+```
+
+### VIII.2.4. Add navigation for TodosScreen
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  ...
+  Todos: undefined;
+};
+```
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+import TodosScreen from "@/screens/TodosScreen"; // Add import for TodosScreen
+// ...
+
+      <Stack.Navigator>
+        ...
+        {/* Add Todos screen to the navigator */}
+        <Stack.Screen
+          name="Todos"
+          component={TodosScreen}
+          options={{ title: "To-Do List" }}
+        />
+      </Stack.Navigator>
+
+```
+
+### VIII.2.5. Add navigation button to HomeScreen
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+  return (
+    <View style={styles.container}>
+      ...
+      
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+        <Button
+          title="Show Todos from API"
+          onPress={() => navigation.navigate("Todos")}
+        />
+      </View>
+      ...
+```
+
+## VIII.3. Additional tasks - Add handling for an empty list
+
+### VIII.3.1. Users empty list handling
+
+[`screens/UsersScreen.tsx`](./my-app/screens/UsersScreen.tsx)
+
+```tsx
+...
+  if (error) {
+    ...
+  }
+
+  // Add empty list handling for users
+  if (!isLoading && !error && users?.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No users found.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      ...
+```
+
+### VIII.3.2. Todos empty list handling
+
+[`screens/TodosScreen.tsx`](./my-app/screens/TodosScreen.tsx)
+
+```tsx
+...
+  if (error) {
+    ...
+  }
+
+  // Add empty list handling for todos
+  if (!isLoading && !error && todos?.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No todos found.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      ...
+```
+
+### VIII.3.3. Posts empty list handling
+
+[`screens/ApiPostsScreen.tsx`](./my-app/screens/ApiPostsScreen.tsx)
+
+```tsx
+...
+  if (error) {
+    ...
+  }
+
+  // Add empty list handling for posts
+  if (!isLoading && !error && posts?.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No posts found.</Text>
+      </View>
+    );
+  }
+
+  return (
+    ...
+  )
+...
+```

@@ -90,12 +90,32 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
       </View>
       {/* </VI.2.6.> */}
 
-      {/* <VI.1.4.> */}
+      {/* <VII.1.7.> */}
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
       <Button
         title="Show Posts from API"
         onPress={() => navigation.navigate("ApiPosts")}
       />
-      {/* </VI.1.4.> */}
+      </View>
+      {/* </VII.1.7.> */}
+
+      {/* <VIII.1.8.> */}
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <Button
+        title="Show Users from API"
+        onPress={() => navigation.navigate("Users")}
+      />
+      </View>
+      {/* </VIII.1.8.> */}
+
+      {/* <VIII.2.5.> */}
+      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+        <Button
+          title="Show Todos from API"
+          onPress={() => navigation.navigate("Todos")}
+        />
+      </View>
+      {/* </VIII.2.5.> */}
 
       <FlatList
           data={events}

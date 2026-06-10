@@ -1,5 +1,8 @@
 // Lab VII.1.4.
-import { useEffect, useState } from "react";
+// <VIII.1.3.>
+import { useFetch } from "../hooks/useFetch";
+// import { useEffect, useState } from "react"; 
+// </VIII.1.3.>
 import {
   View,
   Text,
@@ -18,35 +21,45 @@ type ApiPostsScreenProps = {
 };
 
 export default function ApiPostsScreen({ navigation }: ApiPostsScreenProps) {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+  
+  // <VIII.1.3.>
+  // const [posts, setPosts] = useState<Post[]>([]);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [error, setError] = useState<string>("");
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        setIsLoading(true);
-        setError("");
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       setError("");
 
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/posts" // <VII.3.5./> <VII.3.1./>
-        );
+  //       const response = await fetch(
+  //         "https://jsonplaceholder.typicode.com/posts" // <VII.3.5./> <VII.3.1./>
+  //       );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch data from server.");
-        }
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch data from server.");
+  //       }
 
-        const data: Post[] = await response.json();
-        setPosts(data);
-      } catch (err) {
-        setError("Oops! We couldn't load the posts. Please check your internet connection and try again."); // <VII.2.4./>
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  //       const data: Post[] = await response.json();
+  //       setPosts(data);
+  //     } catch (err) {
+  //       setError("Oops! We couldn't load the posts. Please check your internet connection and try again."); // <VII.2.4./>
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    fetchPosts();
-  }, []);
+  //   fetchPosts();
+  // }, []);
+
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useFetch<Post[]>("https://jsonplaceholder.typicode.com/posts");
+  // </VIII.1.3.>
+
   if (isLoading) {
     return (
       <View style={styles.centered}>
@@ -64,12 +77,22 @@ export default function ApiPostsScreen({ navigation }: ApiPostsScreenProps) {
     );
   }
 
+  // <VIII.3.3.>
+  if (!isLoading && !error && posts?.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>No posts found.</Text>
+      </View>
+    );
+  }
+  // </VIII.3.3.>
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Posts from API: {posts.length}{/* <VII.2.3./> */}</Text>
+      <Text style={styles.header}>Posts from API: {posts?.length ?? 0}{/* <VIII.1.3./> <VII.2.3./> */}</Text>
 
       <FlatList
-        data={posts.slice(0, 10)}                       // <VII.2.1.> 
+        data={posts ?posts.slice(0, 10) : []}                       // <VIII.1.3./> <VII.2.1./> 
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <ApiPostItem

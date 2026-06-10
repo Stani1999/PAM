@@ -24,14 +24,14 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 5,
     },
-    // <V.3.5.>
+    // <IV.3.5.>
     time: {
         fontSize: 14,
         fontWeight: "bold",
         color: "#333",
         marginBottom: 4,
     },
-    // </V.3.5.>
+    // </IV.3.5.>
 
     // <II.2.1.>
     location: {

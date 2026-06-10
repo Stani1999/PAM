@@ -1,4 +1,4 @@
-// Lab I.10.3.
+// Lab I.11.3.
 import { StyleSheet } from 'react-native';
 
 export const FooterStyles = StyleSheet.create({

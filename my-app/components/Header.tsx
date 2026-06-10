@@ -1,4 +1,4 @@
-// Lab I.9.2.
+// Lab I.10.2.
 import { Text, View } from 'react-native';
 // <II.1.1.> 
 import { styles } from '@/styles/HeaderStyles';

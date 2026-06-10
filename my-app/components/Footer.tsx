@@ -1,4 +1,4 @@
-// Lab I.10.3.
+// Lab I.11.3.
 import { Text, View } from 'react-native';
 import { FooterStyles } from '@/styles/FooterStyles'
 
