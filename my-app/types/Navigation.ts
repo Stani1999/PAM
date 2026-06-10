@@ -35,6 +35,8 @@ export type RootStackParamList = {
     id: number;
   };
   // </IX.3.1./>
+
+  FavoritePosts: undefined; // X.4.1.
 };
 
 // <IX.1.3.>
@@ -52,3 +54,9 @@ type UserDetailsRouteProp = RouteProp<RootStackParamList, "UserDetails">;
 
 export type UserDetailsScreenProps = { route: UserDetailsRouteProp };
 // </IX.3.1.>
+
+// <X.6.1.>
+export type FavoritePostsScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "FavoritePosts">;
+};
+// </X.6.1.>

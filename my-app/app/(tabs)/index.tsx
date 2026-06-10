@@ -1,4 +1,5 @@
 // Lab III.3.1.
+import FavoritePostsScreen from "../../screens/FavoritePostsScreen"; // <X.4.2./>
 import UserDetailsScreen from "@/screens/UsersDetailsScreen"; // <IX.3.3./>
 import TodosScreen from "@/screens/TodosScreen"; // <VIII.2.4./>
 import UsersScreen from "../../screens/UsersScreen"; // <VIII.1.7.>
@@ -76,6 +77,14 @@ export default function App() {
           options={{ title: "User Details" }}
         />
         {/* </IX.3.3.> */}
+
+        {/* <X.4.3.> */}
+        <Stack.Screen
+          name="FavoritePosts"
+          component={FavoritePostsScreen}
+          options={{ title: "Favorite Posts" }}
+        />
+        {/* </X.4.3.> */}
 
       </Stack.Navigator>
   );

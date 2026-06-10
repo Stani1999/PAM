@@ -77,12 +77,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
     <View style={styles.container}>
       <Text style={styles.header}>Events</Text>
       
-      {/* 
+      {/*
       <VI.2.6.>
       <VI.1.4.:> 
       <AddEventForm onAddEvent={addEvent} />
       */}
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
         <Button 
           title="Add New Event" 
           onPress={() => navigation.navigate("AddEvent", { onAddEvent: addEvent })} 
@@ -91,7 +91,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
       {/* </VI.2.6.> */}
 
       {/* <VII.1.7.> */}
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
       <Button
         title="Show Posts from API"
         onPress={() => navigation.navigate("ApiPosts")}
@@ -100,7 +100,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
       {/* </VII.1.7.> */}
 
       {/* <VIII.1.8.> */}
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
       <Button
         title="Show Users from API"
         onPress={() => navigation.navigate("Users")}
@@ -109,13 +109,22 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
       {/* </VIII.1.8.> */}
 
       {/* <VIII.2.5.> */}
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
         <Button
           title="Show Todos from API"
           onPress={() => navigation.navigate("Todos")}
         />
       </View>
       {/* </VIII.2.5.> */}
+      
+      {/* <X.4.4.> */}
+      <View style={styles.button}>
+        <Button
+          title="Show Favorite Posts"
+          onPress={() => navigation.navigate("FavoritePosts")}
+        />
+      </View>
+      {/* </X.4.4.> */}
 
       <FlatList
           data={events}

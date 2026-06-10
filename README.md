@@ -566,12 +566,12 @@ git commit -m "Lab 1 - RN basics+"
 ### II.1.0. Create this structure in main directory
 
 ```bash
-                                # components              
+                                # components/             (Initial)
 touch components/Header.tsx     # ├── Header.tsx          (I.10.3.)
 touch components/Footer.tsx     # ├── Footer.tsx          (I.11.3.)
 touch components/ListItem.tsx   # └── ListItem.tsx        (II.1.2.)
-mkdir -p screens                # screens                 (II.1.0.)
-mkdir -p styles                 # styles                  (I.11.1.)
+mkdir -p screens                # screens/                (II.1.0.)
+mkdir -p styles                 # styles/                 (I.11.1.)
 touch styles/indexStyles.tsx    # ├── indexStyles.tsx     (I.11.2.)
 touch styles/FooterStyles.tsx   # ├── FooterStyles.tsx    (I.11.3.)
 touch styles/HeaderStyles.tsx   # ├── HeaderStyles.tsx    (II.1.1.)
@@ -897,6 +897,10 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginBottom: 20,
+  },
+  button: {
+    marginHorizontal: 12, 
+    marginBottom: 10, 
   },
 });
 ```
@@ -1342,6 +1346,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 12,
     ...
   },
+  ...
 });
 
 ```
@@ -1648,9 +1653,9 @@ export default function ListItem({ ..., time, ... }: ListItemProps) {
 ### V.1.1. New Project Structure
 
 ```bash
-mkdir -p data                       # data                        (V.1.1.)
+mkdir -p data                       # data/                       (V.1.1.)
 touch data/events.ts                # └── events.ts               (V.1.2.)
-mkdir -p types                      # types                       (III.2.1.)
+mkdir -p types                      # types/                      (III.2.1.)
 touch types/Event.ts                # └── Event.ts                (V.1.3.)
 ```
 
@@ -2037,11 +2042,11 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 ### VI.1.0. Create the following structure in the main directory
 
 ```bash
-                                      # components              
+                                      # components/                   (Initial)
 touch components/AddEventForm.tsx     # └── AddEventForm.tsx          (VI.1.2.)
-mkdir -p styles                       # styles                        (I.11.1.)
+mkdir -p styles                       # styles/                       (I.11.1.)
 touch styles/AddEventFormStyles.tsx   # └── AddEventFormStyles.tsx    (VI.1.2.)
-mkdir -p screens                      # screens                       (II.1.0.)
+mkdir -p screens                      # screens/                      (II.1.0.)
 touch screens/AddEventScreen.tsx      # └── AddEventScreen.tsx        (VI.2.6.)
 ```
 
@@ -2569,7 +2574,7 @@ import { ... Button } from "react-native"; // Add Button import
       <Text style={styles.header}>Events</Text>
       
       {/* Replace <AddEventForm onAddEvent={addEvent} /> with: */}
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
         <Button 
           title="Add New Event" 
           onPress={() => navigation.navigate("AddEvent", { onAddEvent: addEvent })} 
@@ -2605,7 +2610,7 @@ import AddEventScreen from "@/screens/AddEventScreen"; // Add import for AddEven
 ### VII.1.1 Project structure
 
 ```bash
-                                            # components/
+                                            # components/                         (Initial)
 touch components/ApiPostItem.tsx            # └── ApiPostItem.tsx                 (VII.1.3.)
 mkdir -p screens                            # screens/                            (II.1.0.)
 touch screens/ApiPostsScreen.tsx            # ├── ApiPostsScreen.tsx              (VII.1.4.)
@@ -2909,7 +2914,7 @@ import ApiPostDetailsScreen from "../../screens/ApiPostDetailsScreen";
       <Stack.Navigator>
         ...
 
-        // Add new screens to the navigator
+        {/* Add new screens to the navigator */}
         <Stack.Screen
           name="ApiPosts"
           component={ApiPostsScreen}
@@ -2933,7 +2938,7 @@ import ApiPostDetailsScreen from "../../screens/ApiPostDetailsScreen";
     <View style={styles.container}>
       ...
 
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
       <Button
         title="Show Posts from API"
         onPress={() => navigation.navigate("ApiPosts")}
@@ -3095,10 +3100,10 @@ npm start
 ### VIII.1.1. Update the project structure
 
 ```bash
-                                            # components/
+                                            # components/                         (Initial)
 touch components/UserItem.tsx               # └── UserItem.tsx                    (VIII.1.5.)
 touch components/TodoItem.tsx               # └── TodoItem.tsx                    (VIII.2.2.)
-                                            # hooks/                              
+                                            # hooks/                              (Initial)
 touch hooks/useFetch.ts                     # └── useFetch.ts                     (VIII.1.2.)
 mkdir -p screens                            # screens/                            (II.1.0.)
 touch screens/UsersScreen.tsx               # ├── UsersScreen.tsx                 (VIII.1.6.)
@@ -3140,13 +3145,13 @@ export function useFetch<T>(url: string): UseFetchResult<T> {
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch data from server.");
+          throw new Error("Oops! We couldn't load the posts. Please check your internet connection and try again.");
         }
 
         const json = (await response.json()) as T;
         setData(json);
       } catch (err) {
-        setError("Failed to fetch data from server.");
+        setError("Oops! We couldn't load the posts. Please try again.");
       } finally {
         setIsLoading(false);
       }
@@ -3393,7 +3398,7 @@ import UsersScreen from "../../screens/UsersScreen"; // Add import for UsersScre
 
       <Stack.Navigator>
         ...
-        {/* Add Users screen */}
+        {/* Add Users to the navigator */}
         <Stack.Screen
           name="Users"
           component={UsersScreen}
@@ -3412,7 +3417,7 @@ import UsersScreen from "../../screens/UsersScreen"; // Add import for UsersScre
     <View style={styles.container}>
       ...
 
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
       <Button
         title="Show Users from API"
         onPress={() => navigation.navigate("Users")}
@@ -3621,7 +3626,7 @@ import TodosScreen from "@/screens/TodosScreen"; // Add import for TodosScreen
     <View style={styles.container}>
       ...
       
-      <View style={{ marginHorizontal: 12, marginBottom: 10 }}>
+      <View style={styles.button}>
         <Button
           title="Show Todos from API"
           onPress={() => navigation.navigate("Todos")}
@@ -3735,7 +3740,7 @@ mkdir -p types/                           # types/
                                           # ├── Todo.ts
 touch types/Comment.ts                    # ├── Comment.ts
                                           # └── Navigation.ts
-mkdir -p styles/                          # styles/
+mkdir -p stylesc                          # styles/
 touch styles/UserDetailsScreenStyles.tsx  # ├── UserDetailsScreenStyles.tsx
                                           # └── ...  (all styles is optional)      
                                           # App.tsx
@@ -4087,6 +4092,7 @@ import UserDetailsScreen from "../../screens/UserDetailsScreen"; // Add import f
 ...
       <Stack.Navigator>
         ...
+        {/* Add UserDetails screen to the navigator */}
         <Stack.Screen
           name="UserDetails"
           component={UserDetailsScreen}
@@ -4111,4 +4117,459 @@ export default function UsersScreen({ navigation }: UsersScreenProps) { // Add n
             onPress={() => navigation.navigate("UserDetails", {id: item.id, })} // instead of console.log("Clicked user:", item.id)}
           />
           ...
+```
+
+## **Lab X: AsyncStorage and favorite elements**
+
+## X.1. Install AsyncStorage
+
+### X.1.1. Install the package
+
+```bash
+npx expo install @react-native-async-storage/async-storage
+```
+
+### X.1.2. Run project again
+
+```bash
+npm start
+```
+
+* If Application was running before installation, stop Metro Bundler and run it again
+
+## X.2. Favorite posts implementation
+
+### X.2.0. Create a new file for AsyncStorage
+
+```bash
+                                            # constants/                        (Initial)
+touch constants/storageKeys.ts              # └── storageKeys.ts                (X.2.1.)
+mkdir -p screens                            # screens/                          (II.1.0.)
+touch screens/FavoritePostsScreen.tsx       # └── FavoritePostsScreen.tsx       (X.2.3.)
+mkdir -p services                           # services/                         (X.2.0.)
+touch services/FavoritesStorage.ts          # └── FavoritesStorage.ts           (X.2.2.)
+mkdir -p styles                             # styles/                           (I.11.1.)
+touch styles/FavoritePostsScreenStyles.tsx  # └── FavoritePostsScreenStyles.tsx (X.2.3.)
+```
+
+### X.2.1. Create file with storage keys
+
+[`constants/storageKeys.ts`](./my-app/constants/storageKeys.ts)
+
+```tsx
+export const STORAGE_KEYS = {
+    FAVORITE_POSTS: "favoritePosts",
+};
+```
+
+### X.2.2. Create functions to handle favorites
+
+[`services/FavoritesStorage.ts`](./my-app/services/FavoritesStorage.ts)
+
+```tsx
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { STORAGE_KEYS } from "../constants/storageKeys";
+
+export async function getFavoritePostIds(): Promise<number[]> {
+  const storedValue = await AsyncStorage.getItem(STORAGE_KEYS.FAVORITE_POSTS);
+
+  if (!storedValue) {
+    return [];
+  }
+
+  return JSON.parse(storedValue) as number[];
+}
+
+export async function saveFavoritePostIds(ids: number[]): Promise<void> {
+  await AsyncStorage.setItem(
+    STORAGE_KEYS.FAVORITE_POSTS,
+    JSON.stringify(ids)
+  );
+}
+
+export async function addFavoritePostId(id: number): Promise<number[]> {
+  const currentIds = await getFavoritePostIds();
+
+  if (currentIds.includes(id)) {
+    return currentIds;
+  }
+
+  const updatedIds = [...currentIds, id];
+  await saveFavoritePostIds(updatedIds);
+
+  return updatedIds;
+}
+
+export async function removeFavoritePostId(id: number): Promise<number[]> {
+  const currentIds = await getFavoritePostIds();
+  const updatedIds = currentIds.filter((currentId) => currentId !== id);
+
+  await saveFavoritePostIds(updatedIds);
+
+  return updatedIds;
+}
+
+export async function isFavoritePost(id: number): Promise<boolean> {
+    const currentIds = await getFavoritePostIds();
+    
+    return currentIds.includes(id);
+}
+```
+
+### X.2.3. Update post details screen
+
+[`styles/ApiPostDetailsScreenStyles.tsx`](./my-app/styles/ApiPostDetailsScreenStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  buttonContainer: {
+    marginTop: 24,
+  },
+});
+```
+
+[`screens/ApiPostDetailsScreen.tsx`](./my-app/screens/ApiPostDetailsScreen.tsx)
+
+```tsx
+// Add imports for favorites handling
+import {
+ addFavoritePostId,
+ removeFavoritePostId,
+ isFavoritePost,
+} from "../services/FavoritesStorage";
+import { useEffect, useState } from "react";
+...
+import { ..., Button } from "react-native";               // Add import for Button
+...
+export default function ApiPostDetailsScreen({route,}: ApiPostDetailsScreenProps) {
+  ...
+  // Add state for favorite status directly under last const !!
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  // Add useEffect to check if the post is favorite when component mounts or id changes
+  useEffect(() => {
+    const checkFavorite = async () => {
+      const result = await isFavoritePost(id);
+      setIsFavorite(result);
+    };
+    checkFavorite();
+  }, [id]);
+
+  // Add function to toggle favorite status
+  const toggleFavorite = async () => {
+    if (isFavorite) {
+      await removeFavoritePostId(id);
+      setIsFavorite(false);
+    } else {
+      await addFavoritePostId(id);
+      setIsFavorite(true);
+    }
+  };
+  ...
+
+    return (
+    <View style={styles.container}>
+      ...
+      {/* Add button for toggling favorite status */}
+      <View style={styles.buttonContainer}>
+        <Button
+          title={isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+          onPress={toggleFavorite}
+        />
+        </View>
+    </View>
+  );
+}
+```
+
+## X.3. Testing the functionality
+
+### X.3.1. Run the application
+
+```bash
+npm start
+```
+
+* In Metro Bundler press "a" to open the application.
+
+### X.3.2. Navigate to the list of posts from the API
+
+* Click "Show Posts from API" on the Home screen to see the list of posts.
+
+### X.3.3. Open the details of a selected post
+
+* Click on any post to open its details screen.
+
+### X.3.4. Click "Add to Favorites"
+
+* Click the button to add the post to favorites.
+* The button text should change to "Remove from Favorites".
+
+### X.3.5. Go back to the list
+
+* Use the back button to return to the list of posts.
+
+### X.3.6. Open the same post again
+
+* Click on the same post to open its details screen again.
+
+### X.3.7. Check if the button shows "Remove from Favorites"
+
+* The button should show "Remove from Favorites", indicating that the post is still marked as favorite.
+
+### X.3.8. Refresh the application
+
+* Close the application completely and open it again.
+  * Press Ctrl+C to exit in Metro Bundler (terminal)
+  * Press "a" to open the application again.
+
+### X.3.9. Open the same post again
+
+* Navigate to the same post details screen again.
+
+### X.3.10. Check if the application remembers the favorite post status
+
+* The button should still show "Remove from Favorites", confirming that the favorite status is saved in AsyncStorage and persists across app restarts.
+
+## X.4. Adding a screen with the list of favorite posts
+
+### X.4.1. Create a new screen `FavoritePostsScreen`
+
+[`styles/FavoritePostsScreenStyles.tsx`](./my-app/styles/FavoritePostsScreenStyles.tsx)
+
+```tsx
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f2f2",
+    paddingTop: 20,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  button: {
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  card: {
+    backgroundColor: "#ffffff",
+    padding: 16,
+    marginHorizontal: 12,
+    marginVertical: 6,
+    borderRadius: 10,
+    elevation: 2,
+  },
+  cardText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  emptyText: {
+    margin: 16,
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+  },
+});
+```
+
+[`screens/FavoritePostsScreen.tsx`](./my-app/screens/FavoritePostsScreen.tsx)
+
+```tsx
+import { useEffect, useState } from "react";
+import { View, Text, FlatList, Button } from "react-native";
+
+import { getFavoritePostIds } from "../services/FavoritesStorage";
+import { styles } from "@/styles/FavoritePostsScreenStyles";
+
+export default function FavoritePostsScreen() {
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+
+  const loadFavorites = async () => {
+    const ids = await getFavoritePostIds();
+    setFavoriteIds(ids);
+  };
+
+  useEffect(() => {
+    loadFavorites();
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Favorite Posts</Text>
+      <View style={styles.button}>
+        <Button title="Refresh" onPress={loadFavorites} />
+      </View>
+      <FlatList
+        data={favoriteIds}
+        keyExtractor={(item) => item.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <Text style={styles.cardText}>Post ID: {item}</Text>
+          </View>
+        )}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>No favorite posts.</Text>
+        }
+      />
+    </View>
+  );
+}
+```
+
+### X.4.2. Add navigation type for FavoritePostsScreen
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+export type RootStackParamList = {
+  ...
+  FavoritePosts: undefined; // Add FavoritePosts screen to RootStackParamList
+};
+...
+```
+
+### X.4.3. Add FavoritePostsScreen to navigation
+
+[`app/(tabs)/index.tsx`](./my-app/app/(tabs)/index.tsx)
+
+```tsx
+import FavoritePostsScreen from "../../screens/FavoritePostsScreen"; // Add import for FavoritePostsScreen
+...
+      <Stack.Navigator>
+        ...
+        {/* Add FavoritePostsScreen to the navigator */}
+        <Stack.Screen
+          name="FavoritePosts"
+          component={FavoritePostsScreen}
+          options={{ title: "Favorite Posts" }}
+        />
+      </Stack.Navigator>
+      ...
+```
+
+### X.4.4. Add navigation to FavoritePostsScreen from HomeScreen
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+  return (
+    <View style={styles.container}>
+      ...
+      <View style={styles.button}>
+        <Button
+          title="Show Favorite Posts"
+          onPress={() => navigation.navigate("FavoritePosts")}
+        />
+      </View>
+      ...
+```
+
+## X.5. Practice task
+
+### X.5.1. Change the `FavoritePostsScreen` to show the text "Favorite post number X" instead of just the ID
+
+[`screens/FavoritePostsScreen.tsx`](./my-app/screens/FavoritePostsScreen.tsx)
+
+```tsx
+        ...
+        renderItem={({ item, index }) => ( // item -> index, item
+          <View style={styles.card}>
+            <Text style={styles.cardText}>Favorite post number {index + 1} (ID: {item})</Text>
+          </View>
+        )}
+        ...
+```
+
+### X.5.2. Add a button to "Clear Favorites" in `FavoritesStorage.ts`
+
+[`services/FavoritesStorage.ts`](./my-app/services/FavoritesStorage.ts)
+
+```tsx
+...
+export async function clearFavoritePosts(): Promise<void> {
+  await AsyncStorage.removeItem(STORAGE_KEYS.FAVORITE_POSTS);
+}
+```
+
+### X.5.3. After clicking "Clear Favorites" Clear data from AsyncStorage and set favoriteIds to an empty array
+
+[`screens/FavoritePostsScreen.tsx`](./my-app/screens/FavoritePostsScreen.tsx)
+
+```tsx
+import { ..., clearFavoritePosts } from "../services/FavoritesStorage";
+...
+      <View style={styles.button}>
+        <Button
+          title="Clear Favorites"
+          onPress={async () => {
+            {/* Clear data from AsyncStorage */}
+            await clearFavoritePosts();
+            {/* Set favoriteIds to an empty array: */}
+            setFavoriteIds([]);
+          }}
+        />
+      </View>
+...
+```
+
+### 5.4.4. Test if the data is really cleared after restarting the application
+
+* Navigate to Favorite Posts screen click "Clear Favorites" button.
+* Press Ctrl+C in terminal to stop Metro Bundler
+* Run `npm start` again to restart Metro Bundler.
+  
+  ```bash
+  npm start
+  ```
+
+* Press "a" to open the application again.
+* Navigate to Favorite Posts screen and check if the list is still empty.
+
+## X.6. Additional tasks - Expand `FavoritePostsScreen` so that when you click on a favorite post, it navigates to `ApiPostDetailsScreen`
+
+### X.6.1. Add navigation to `FavoritePostsScreen`
+
+[`types/Navigation.ts`](./my-app/types/Navigation.ts)
+
+```tsx
+...
+export type FavoritePostsScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "FavoritePosts">;
+};
+```
+
+[`screens/FavoritePostsScreen.tsx`](./my-app/screens/FavoritePostsScreen.tsx)
+
+```tsx
+import { FavoritePostsScreenProps } from "../types/Navigation"; // Add import for navigation prop
+...
+export default function FavoritePostsScreen({ navigation }: FavoritePostsScreenProps) { // () -> ({ navigation }: FavoritePostsScreenProps)
+  ...
+```
+
+### X.6.2. In renderItem use Pressable
+
+[`screens/FavoritePostsScreen.tsx`](./my-app/screens/FavoritePostsScreen.tsx)
+
+```tsx
+import { ..., Pressable } from "react-native"; // Add import for Pressable
+...
+renderItem={({ item, index }) => (
+          // Add Pressable with onPress to navigate to ApiPostDetailsScreen with the post id as parameter
+          <Pressable
+            onPress={() => navigation.navigate("ApiPostDetails", { id: item })}
+          >
+            <View style={styles.card}>
+              ...
+            </View>
+          </Pressable> // Close Pressable!
+        )}
+...
 ```

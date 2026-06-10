@@ -21,13 +21,13 @@ export function useFetch<T>(url: string): UseFetchResult<T> {
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch data from server.");
+          throw new Error("Oops! We couldn't load the posts. Please check your internet connection and try again.");
         }
 
         const json = (await response.json()) as T;
         setData(json);
       } catch (err) {
-        setError("Failed to fetch data from server.");
+        setError("Oops! We couldn't load the posts. Please try again.");
       } finally {
         setIsLoading(false);
       }

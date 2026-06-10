@@ -54,4 +54,10 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   // </IX.2.1.>
+
+  // <X.2.3.>
+  buttonContainer: {
+    marginTop: 24,
+  },
+  // </X.2.3.>
 });
