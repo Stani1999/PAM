@@ -23,4 +23,51 @@ export const styles = StyleSheet.create({
     marginHorizontal: 12, 
     marginBottom: 10, 
   },
+  // <XI.3.2.>
+  searchInput: {
+    width: "92%",
+    backgroundColor: "#ffffff",
+    borderColor: "#cccccc",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  categoryRow: {
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 8,
+    marginBottom: 12,
+    paddingHorizontal: 12,
+  },
+  categoryButton: {
+    borderWidth: 1,
+    borderColor: "#444444",
+    borderRadius: 999,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    backgroundColor: "#ffffff",
+  },
+  categoryButtonSelected: {
+    backgroundColor: "#444444",
+  },
+  categoryButtonText: {
+    color: "#444444",
+    fontWeight: "600",
+  },
+  categoryButtonTextSelected: {
+    color: "#ffffff",
+  },
+  emptyStateText: {
+    width: "100%",
+    textAlign: "center",
+    color: "#666666",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  // </XI.3.2.>
 });

@@ -34,7 +34,6 @@ npx create-expo-app@latest
 ```
 
 * Follow the prompts to create a new Expo project. (`y` and enter 2 times)
-
 * Wait for the installation to complete. This may take a few minutes.
 
 ### I.1.3. Create a new Expo project
@@ -53,9 +52,7 @@ npm start
 ### I.2.1. Download the newest tar.gz [Android Studio](https://developer.android.com/studio?hl=en)
 
 * Find the section "Android Studio downloads"
-
 * Click on Linux (64-bitowy) and Accept the terms and conditions to download the file.
-
 * Go to downloads folder
 
 ```bash
@@ -94,9 +91,7 @@ cd $HOME/Android/Sdk/cmdline-tools
 ### I.3.2. Download the latest command line tools
 
 * Check it on the same page like in step [I.2.1](#i21-download-the-newest-targz-android-studio) [Android Studio](https://developer.android.com/studio?hl=en)
-
 * Find the section `Command line tools only`
-
 * Copy title from column `SDK tools package` for `Linux`
 
     ```bash
@@ -109,7 +104,7 @@ cd $HOME/Android/Sdk/cmdline-tools
 unzip commandlinetools-linux-14742923_latest.zip # replace with the actual file name
 ```
 
-### I.3.4. Change the directory name to `latest`(it's important!)
+### I.3.4. Change the directory name to latest (it's important!)
 
 ```bash
 mv cmdline-tools latest
@@ -230,9 +225,7 @@ emulator -avd pixel_9_36 -no-snapshot-load
 ```
 
 * On emulator right bar -> click on `...`  -> Snapshot -> Take Snapshot
-
 * Go to Settings in Snapshot and uncheck `Auto-save current state to Quickboot` -> No
-
 * On pop-up click `yes`. Emulator will restart and load the default state instead of the snapshot
 
 ### I.6.4. Performance Tuning `nano ~/.android/avd/pixel_9_36.avd/config.ini`
@@ -316,9 +309,7 @@ npm start
 ```
 
 * Open Android by tapping `a` in the terminal to launch the app on the emulator.
-
 * Wait for Installing Expo Go on pixel_9_36... and the `entry.js` to load.
-
 * In case of issues back to [`I.6.`](#i6-in-case-of-issues)
 
 ## I.9. Interactivity - useState
@@ -567,7 +558,7 @@ git commit -m "Lab 1 - RN basics+"
 
 ```bash
                                 # components/             (Initial)
-touch components/Header.tsx     # ├── Header.tsx          (I.10.3.)
+touch components/Header.tsx     # ├── Header.tsx          (I.10.2.)
 touch components/Footer.tsx     # ├── Footer.tsx          (I.11.3.)
 touch components/ListItem.tsx   # └── ListItem.tsx        (II.1.2.)
 mkdir -p screens                # screens/                (II.1.0.)
@@ -840,6 +831,20 @@ export default function ListItem({ ... isHighlighted }: ListItemProps) { // add 
     { id: 8, title: "Hackathon Kickoff", description: "19:00", location: "E5", isHighlighted: true },
   ];
   ...
+```
+
+### II.2.5. Commit all changes for Lab II
+
+```bash
+git add .
+git commit -m "Lab 2 - components and props"
+```
+
+### II.2.6. First commit with (additional) notes about the project
+
+```bash
+git add .
+git commit -m "Notes with current (Lab 2) settings and changes"
 ```
 
 ---
@@ -1258,6 +1263,13 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
     ...
 ```
 
+### III.6.6. Commit all changes for Lab III
+
+```bash
+git add .
+git commit -m "Lab 3 - navigation"
+```
+
 ---
 
 ## **Lab IV: FlatList and dynamic data rendering**
@@ -1644,6 +1656,13 @@ export default function ListItem({ ..., time, ... }: ListItemProps) {
           ...            
 ```
 
+### IV.3.6. Commit all changes for Lab IV
+
+```bash
+git add .
+git commit -m "Lab 4 - FlatList i dynamiczna lista"
+```
+
 ---
 
 ## **Lab V: Project structure, separation of data and types**
@@ -1908,7 +1927,7 @@ export type RootStackParamList = {
 
 ```
 
-### V.3.3. Add another events `in events.ts` (+ integrate category field in the data)
+### V.3.3. Add other events `in events.ts` (+ integrate category field in the data)
 
 [`data/events.ts`](./my-app/data/events.ts)
 
@@ -2033,6 +2052,13 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 }
 ```
 
+### V.3.6. Commit all changes for Lab V
+
+```bash
+git add .
+git commit -m "Lab 5 - struktura projektu i dane"
+```
+
 ---
 
 ## **Lab VI: Forms and adding data to a list**
@@ -2043,14 +2069,14 @@ export default function DetailsScreen({ route }: DetailsScreenProps) {
 
 ```bash
                                       # components/                   (Initial)
-touch components/AddEventForm.tsx     # └── AddEventForm.tsx          (VI.1.2.)
+touch components/AddEventForm.tsx     # └── AddEventForm.tsx          (VI.1.3.)
 mkdir -p styles                       # styles/                       (I.11.1.)
-touch styles/AddEventFormStyles.tsx   # └── AddEventFormStyles.tsx    (VI.1.2.)
+touch styles/AddEventFormStyles.tsx   # └── AddEventFormStyles.tsx    (VI.1.3.)
 mkdir -p screens                      # screens/                      (II.1.0.)
 touch screens/AddEventScreen.tsx      # └── AddEventScreen.tsx        (VI.2.6.)
 ```
 
-### VI.1.1. Check events and Event type is the same as required for Lab VI
+### VI.1.1. Check if events and the Event type are the same as required for Lab VI
 
 Requirement: [`types/Event.ts`](./my-app/types/Event.ts)
 
@@ -2601,6 +2627,13 @@ import AddEventScreen from "@/screens/AddEventScreen"; // Add import for AddEven
       </Stack.Navigator>
 ```
 
+### VI.2.7. Commit all changes for Lab VI
+
+```bash
+git add .
+git commit -m "Lab 6 - formularze i dodawanie danych"
+```
+
 ---
 
 ## **Lab VII: Fetching data from a public API (`fetch`, `useEffect`, `loading`, `error`)**
@@ -3091,6 +3124,13 @@ npm start
 
 * They will be covered in the next labs
 
+### VII.4.2. Commit all changes for Lab VII
+
+```bash
+git add .
+git commit -m "Lab 7 - pobieranie danych z API"
+```
+
 ---
 
 ## **Lab VIII: Custom hook `useFetch` and separation of logic from UI**
@@ -3426,7 +3466,7 @@ import UsersScreen from "../../screens/UsersScreen"; // Add import for UsersScre
       ...
 ```
 
-## VIII.2. Practice tasks add `ToDo` to application
+## VIII.2. Practice tasks - add ToDo to application
 
 ### VIII.2.1. Create a type for Todo
 
@@ -3710,16 +3750,25 @@ import TodosScreen from "@/screens/TodosScreen"; // Add import for TodosScreen
 ...
 ```
 
-## **Lab IX: API Data Details Screen
+### VIII.3.4. Commit all changes from Lab VIII
 
-## IX.1. I Don't now yet
+```bash
+git add .
+git commit -m "Lab 8 - custom hook useFetch"
+```
+
+---
+
+## **Lab IX: API Data Details Screen**
+
+## IX.1. API Post Details Implementation
 
 ### IX.1.1. Final project structure (optional files = not listed)
 
 ```bash
                                           # components/
                                           # ├── ApiPostItem.tsx
-                                          # ├── Header.tsx
+                                          # ├── Header.tsx                  
                                           # ├── ListItem.tsx
                                           # ├── AddEventForm.tsx
                                           # └── UserItem.tsx
@@ -3740,7 +3789,7 @@ mkdir -p types/                           # types/
                                           # ├── Todo.ts
 touch types/Comment.ts                    # ├── Comment.ts
                                           # └── Navigation.ts
-mkdir -p stylesc                          # styles/
+mkdir -p styles                           # styles/
 touch styles/UserDetailsScreenStyles.tsx  # ├── UserDetailsScreenStyles.tsx
                                           # └── ...  (all styles is optional)      
                                           # App.tsx
@@ -4119,6 +4168,15 @@ export default function UsersScreen({ navigation }: UsersScreenProps) { // Add n
           ...
 ```
 
+### IX.3.5. Commit all changes for Lab IX
+
+```bash
+git add .
+git commit -m "Lab 9 - szczegoly danych z API"
+```
+
+---
+
 ## **Lab X: AsyncStorage and favorite elements**
 
 ## X.1. Install AsyncStorage
@@ -4145,11 +4203,11 @@ npm start
                                             # constants/                        (Initial)
 touch constants/storageKeys.ts              # └── storageKeys.ts                (X.2.1.)
 mkdir -p screens                            # screens/                          (II.1.0.)
-touch screens/FavoritePostsScreen.tsx       # └── FavoritePostsScreen.tsx       (X.2.3.)
+touch screens/FavoritePostsScreen.tsx       # └── FavoritePostsScreen.tsx       (X.4.1.)
 mkdir -p services                           # services/                         (X.2.0.)
 touch services/FavoritesStorage.ts          # └── FavoritesStorage.ts           (X.2.2.)
 mkdir -p styles                             # styles/                           (I.11.1.)
-touch styles/FavoritePostsScreenStyles.tsx  # └── FavoritePostsScreenStyles.tsx (X.2.3.)
+touch styles/FavoritePostsScreenStyles.tsx  # └── FavoritePostsScreenStyles.tsx (X.4.1.)
 ```
 
 ### X.2.1. Create file with storage keys
@@ -4509,9 +4567,9 @@ import { ..., clearFavoritePosts } from "../services/FavoritesStorage";
         <Button
           title="Clear Favorites"
           onPress={async () => {
-            {/* Clear data from AsyncStorage */}
+            //Clear data from AsyncStorage
             await clearFavoritePosts();
-            {/* Set favoriteIds to an empty array: */}
+            // Set favoriteIds to an empty array:
             setFavoriteIds([]);
           }}
         />
@@ -4573,3 +4631,438 @@ renderItem={({ item, index }) => (
         )}
 ...
 ```
+
+### X.6.3. Commit changes
+
+```bash
+git add .
+git commit -m "Lab 10 - AsyncStorage i ulubione elementy"
+```
+
+---
+
+## **Lab XI: Artificial Intelligence in Mobile Application Design**
+
+### XI.1. Analysis of the project with the help of AI
+
+### XI.1.0. In Visual Studio Code, open the built-in Copilot window **Ctrl + Alt + I**
+
+### XI.1.1. Goal: Use AI not for writing code, but for understanding the existing application
+
+### XI.1.2. Input the following prompt in the Copilot window
+
+```md
+Analyze the structure of this React Native / Expo project. Do not change any files. Describe:
+
+1. where the application screens are located,
+
+2. where the reusable components are,
+
+3. where the data and types are,
+
+4. how navigation works,
+
+5. what are potential places to add search and filtering. Answer technically but concisely.
+```
+
+### XI.1.3. Output from AI
+
+```md
+I’m checking the app entry points and a couple of screen/component files so I can describe the structure from the actual routing and data flow, not just the folder names.
+
+I’ve confirmed the Expo Router entry points; now I’m checking the shared navigation types and the route-facing screens so I can separate the router layer from the app’s own stack-based screen logic.
+
+I have the routing picture now. I’m doing one last pass over the shared folders so I can name the main extension points for search/filtering without guessing.
+
+I’ve got enough to answer cleanly. I’m not editing anything; just verifying the navigation boundary so I can describe it accurately instead of blending the Expo Router layer with the native stack inside the home tab.
+
+I’ve got enough to answer cleanly. I’m not editing anything; just verifying the navigation boundary so I can describe it accurately instead of blending the Expo Router layer with the native stack inside the home tab.
+
+I’ve got enough to answer cleanly. I’m not editing anything; just verifying the navigation boundary so I can describe it accurately instead of blending the Expo Router layer with the native stack inside the home tab.
+
+Read [Project Structure](./my-app/app/modal.tsx)
+
+1. Screens live in two layers. The Expo Router entry routes are under _layout.tsx: my-app/app/(tabs)/index.tsx/index.tsx#L1), my-app/app/(tabs)/explore.tsx/explore.tsx#L1), and modal.tsx. The app’s feature screens are in HomeScreen.tsx and include Home, Details, AddEvent, ApiPosts, ApiPostDetails, Users, UsersDetails, Todos, and FavoritePosts.
+
+2. Reusable components are in ListItem.tsx. The main shared UI pieces are ListItem, ApiPostItem, TodoItem, UserItem, AddEventForm, Header, Footer, plus generic/template components like themed-text, themed-view, parallax-scroll-view, haptic-tab, and the ui subfolder.
+
+3. Data and types are split cleanly into events.ts for seed event data and Navigation.ts for domain/API models and navigation contracts. The key types are Event, Post, Todo, User, Comment, and RootStackParamList in Navigation.ts.
+
+4. Navigation is hybrid. The app boots through Expo Router, with _layout.tsx defining the root stack and my-app/app/(tabs)/_layout.tsx/_layout.tsx#L1) defining the tab bar. Inside the Home tab, my-app/app/(tabs)/index.tsx/index.tsx#L1) mounts a React Navigation native stack that registers the screens from the screens folder, and those screens navigate by route names defined in Navigation.ts. The modal route is handled separately by Expo Router in modal.tsx.
+
+5. Best places to add search and filtering are the list-driven screens: HomeScreen.tsx for local event filtering, ApiPostsScreen.tsx, UsersScreen.tsx, TodosScreen.tsx, and FavoritePostsScreen.tsx for remote or stored collections. If you want reuse, a shared search input or filter hook would fit well in ListItem.tsx or useFetch.ts, but the current hook only fetches data and does not filter it.
+```
+
+## XI.2. Planning Changes with AI (use Plan Agent)
+
+### XI.2.1. Goal: learn how to make AI produce a plan before writing code
+
+### XI.2.2. Input the following prompt in the Copilot window
+
+```md
+I want to add a search and category filtering feature to the app's item lists.
+Don't edit any files yet.
+Prepare an implementation plan in no more than 8 steps.
+Include:
+- which files need to be changed,
+- whether a new component is needed,
+- what the search state should look like,
+- how to avoid filtering data directly in JSX,
+- how to test the change manually in the mobile app.
+```
+
+### XI.2.3. Output from AI
+
+```md
+I’m checking the session plan memory first, then I’ll draft a concise 8-step implementation plan that fits the existing screen structure and list-based data flow.
+
+I have enough context to lock the plan. I’m writing it into session memory now and then I’ll show the same plan here for review.
+
+I’m checking the session plan memory first, then I’ll draft a concise 8-step implementation plan that fits the existing screen structure and list-based data flow.
+
+## Plan: Search and Category Filtering
+
+Add a shared search/filter layer for the app’s list screens so filtering logic stays in the screen/controller layer instead of inside JSX. The recommended approach is to introduce one reusable search/filter component, keep local state per screen, and derive filtered arrays before render.
+
+**Steps**
+1. Add a shared filter UI component, likely `SearchFilterBar`, under components to hold the text input, optional category selector, and a clear/reset action. Depends on step 2 for exact screen needs if you want the component API to match all lists.
+2. Update the item-list screens that actually render collections: HomeScreen.tsx, ApiPostsScreen.tsx, UsersScreen.tsx, TodosScreen.tsx, and FavoritePostsScreen.tsx. Add local search state and category state where a category exists. Parallel with step 3.
+3. Define the search state shape per screen as simple primitives, for example `searchQuery: string` and `selectedCategory: string | 'All'`. For screens without meaningful categories, keep only `searchQuery` and hide the category selector. Parallel with step 2.
+4. Derive `filteredItems` before the return statement using a pure filter function or `useMemo`, then render `FlatList` from that derived array. Do not call `.filter(...)` directly inside JSX.
+5. Extend or reuse existing types only where needed. If category values are already part of the event data, reuse them; otherwise add a small category field or category union in my-app/types so the filter UI and screen logic stay typed.
+6. Adjust styles and any small screen-specific layout details so the search bar sits above the list and remains usable on mobile. Update the relevant styles files as needed, especially the screen style modules under styles.
+7. If the filter UI should be reusable across multiple lists, keep category options configurable via props rather than hardcoding them in each screen. Otherwise, keep the component generic and drive categories from each screen’s local data.
+8. Manually test in the mobile app by opening each list screen, confirming search narrows results, category changes the list, clearing resets both controls, empty states still render, and navigation from filtered items still works.
+
+**Relevant files**
+- my-app/components/SearchFilterBar.tsx — new shared UI component for search plus category selection.
+- HomeScreen.tsx — filter the event list by title/category and preserve navigation to details.
+- ApiPostsScreen.tsx — search remote posts by title/body and optionally expose category-like grouping if desired.
+- UsersScreen.tsx — search users by name/username/email.
+- TodosScreen.tsx — search todos by title and optionally filter by completion state if you want a category-like toggle.
+- FavoritePostsScreen.tsx — filter saved post IDs or fetched post metadata if you decide to enrich favorites.
+- Navigation.ts and Event.ts — only if category typing or list props need refinement.
+- styles — add spacing, input, and empty-state styling for the new controls.
+
+**Verification**
+1. Run the app in Expo Go or simulator and test each affected screen manually.
+2. Verify that typing a query updates the visible list without mutating the source array.
+3. Verify that category selection narrows the list and clear/reset restores the full list.
+4. Confirm empty filtered states show a friendly message instead of a blank list.
+5. Confirm item taps and navigation still work from filtered results.
+```
+
+## XI.3. Implementation of Changes with AI (Use Agent)
+
+### XI.3.1. Goal: use AI to make a real change in the app, but we control the scope and diff
+
+### XI.3.2. Input the following prompt in the Copilot window
+
+```md
+Implement search and category filtering in an existing list screen. Requirements:
+- do not add new libraries,
+- keep TypeScript,
+- do not change navigation,
+- add a TextInput for searching by name or description,
+- add a simple category filter,
+- move filtering logic out of JSX, ideally through useMemo,
+- add an empty state when there are no results,
+- show me the list of changed files and a brief justification for the changes.
+- mark all changes with <XI.3.2.> ... </XI.3.2.> or for single lines <XI.3.2./>, do not remove other comments of this type, just add new ones with the same format. 
+```
+
+### XI.3.3. Output from AI
+
+```md
+I’m locating the Home list’s style and event shape so I can add search/filtering without touching navigation or spreading logic into JSX.
+
+Read [styles/HomeScreenStyles.tsx](./my-app/styles/HomeScreenStyles.tsx)
+
+Read [types/Event.ts](./my-app/types/Event.ts)
+
+Read [components/AddEventForm.tsx](./my-app/components/AddEventForm.tsx)
+
+Read [types/Navigation.ts](./my-app/types/Navigation.ts)
+
+I’ve got the minimal change surface: the Home screen and its styles. I’m patching those two files now, keeping routing unchanged and adding the filtering derivation outside JSX.
+
+Apply Patch
+
+The first patch failed on tool input formatting, not code. I’m reapplying the same two-file change with the required patch metadata.
+
+The edit is in place. I’m running a focused type/lint check on the touched screen and style files before I summarize the changed files.
+
+Checked , no problems found
+
+Implemented in two files, with navigation unchanged and no new libraries added.
+
+Changed files:
+- HomeScreen.tsx - added local search state and category state, derived `filteredEvents` with useMemo outside JSX, added a TextInput for name/description search, added a simple category filter, and showed an empty state when nothing matches.
+- HomeScreenStyles.tsx - added styles for the search field, category buttons, and empty-state message.
+
+Validation: focused error check passed with no errors in the touched files.
+
+Made changes.
+```
+
+### XI.3.4. Manually describe the changes
+
+[`styles/HomeScreenStyles.tsx`](./my-app/styles/HomeScreenStyles.tsx)
+
+```tsx
+...
+export const styles = StyleSheet.create({
+  ...
+  // Correctly added styles with all needed tags
+  searchInput: {
+    width: "92%",
+    backgroundColor: "#ffffff",
+    borderColor: "#cccccc",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    marginHorizontal: 12,
+    marginBottom: 12,
+  },
+  categoryRow: {
+    width: "100%",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    gap: 8,
+    marginBottom: 12,
+    paddingHorizontal: 12,
+  },
+  categoryButton: {
+    borderWidth: 1,
+    borderColor: "#444444",
+    borderRadius: 999,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    backgroundColor: "#ffffff",
+  },
+  categoryButtonSelected: {
+    backgroundColor: "#444444",
+  },
+  categoryButtonText: {
+    color: "#444444",
+    fontWeight: "600",
+  },
+  categoryButtonTextSelected: {
+    color: "#ffffff",
+  },
+  emptyStateText: {
+    width: "100%",
+    textAlign: "center",
+    color: "#666666",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+});
+```
+
+[`screens/HomeScreen.tsx`](./my-app/screens/HomeScreen.tsx)
+
+```tsx
+import { useMemo, ... } from "react";                  // AI: added useMemo and did not add single line tag, removing old one
+...
+import { ..., TextInput, Pressable } from "react-native"; // AI: added TextInput and Pressable and did not add single line tag 
+...
+
+export default function HomeScreen({ navigation }: HomeScreenProps) { /
+  
+  // Correctly placed below first const
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  // Correctly placed before return, after all consts
+  const categories = useMemo(() => {
+    return ["All", ...new Set(events.map((event) => event.category))];
+  }, [events]);
+
+  const filteredEvents = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    return events.filter((event) => {
+      const matchesQuery =
+        normalizedQuery.length === 0 ||
+        event.title.toLowerCase().includes(normalizedQuery) ||
+        event.description.toLowerCase().includes(normalizedQuery);
+
+      const matchesCategory =
+        selectedCategory === "All" || event.category === selectedCategory;
+
+      return matchesQuery && matchesCategory;
+    });
+  }, [events, searchQuery, selectedCategory]);
+  ...
+        // AI added filteredEvents and empty state, but did not tag a change 
+        data={filteredEvents} // data={events} -> data={filteredEvents}
+          ListEmptyComponent={
+            <Text style={styles.emptyStateText}>No events match your search or category.</Text>
+          } 
+          ...
+```
+
+### XI.3.5. In summary
+
+AI correctly implemented the new functionality, but it was necessary to manually add project-specific tags.
+
+## XI.4. Code Review and Validation
+
+### XI.4.1. Goal: the most important skill in AI-assisted development is review
+
+### XI.4.2. Input the following prompt in the Copilot window
+
+```md
+Analyze my current code. Do not edit any files. List potential issues:
+
+- TypeScript errors,
+- possible performance issues,
+- style inconsistencies,
+- violation of existing architecture,
+- lack of edge case handling,
+- bad programming practices
+etc.
+```
+
+### XI.4.3. Output from AI
+
+```md
+I’m checking the current files and compiler output first so the review is grounded in the actual code, then I’ll report only concrete issues with file references.
+
+Checked , no problems found
+
+Read [screens/HomeScreen.tsx](./my-app/screens/HomeScreen.tsx), lines 1 to 240
+
+Read [styles/HomeScreenStyles.tsx](./my-app/styles/HomeScreenStyles.tsx)
+
+Read [types/Event.ts](./my-app/types/Event.ts)
+
+I have the main candidate issues; I’m checking the list item styling once so I can separate real layout risks from just subjective style preferences.
+
+Read [styles/ListItemStyles.tsx](./my-app/styles/ListItemStyles.tsx)
+
+No TypeScript errors were reported in the current files, but I do see a few concrete risks:
+
+1. The new filter UI is laid out inside a container that still uses centered alignment, which is likely to produce awkward mobile layout as the screen grows. The search field, category chips, buttons, and list are all stacked in a centered parent, so the list may feel cramped or not use width consistently on smaller devices. See HomeScreenStyles.tsx and HomeScreen.tsx.
+
+2. The category filter state is stringly typed, so the code has weak type safety for something that is effectively a fixed set of values. `selectedCategory` is just a `string`, and the categories are derived dynamically from data, which makes accidental invalid values easy to introduce later. See HomeScreen.tsx and HomeScreen.tsx.
+
+3. The search only checks `title` and `description`, so it can miss other user-visible fields that might reasonably be searched in this app, such as `speaker`, `location`, or `category`. That makes the filter less useful than it looks at first glance. See HomeScreen.tsx.
+
+4. The current implementation is screen-local, so if the same search/filter behavior is needed on other list screens, the logic will be duplicated unless it is extracted. That is not a bug now, but it is a maintainability risk in the current architecture.
+
+If you want, I can do a deeper pass on the rest of the app and rank the issues by severity.
+```
+
+## XI.5. Refactoring and Quality Improvement
+
+### XI.5.1. Goal: The student uses AI not only to add features but to improve code quality
+
+### XI.5.2. Input the following prompt in the Copilot window
+
+```md
+Propose a code refactor. Do not change the app behavior. The goal is readability and consistency with the existing project style and best practices. Show the proposed changes first, then wait for approval.
+```
+
+### XI.5.3. Output from AI
+
+```md
+Proposed refactor, with behavior kept unchanged:
+
+1. Extract the filter logic from HomeScreen.tsx into a small pure helper, e.g. `filterEvents(events, searchQuery, selectedCategory)`, so the screen reads as data setup, derived state, and render. This improves readability and makes the filtering rule easy to test.
+
+2. Move the search/category UI into a reusable component, e.g. `EventFilterBar`, while keeping the same props and visual behavior. That would reduce the size of the screen component and make the control layout consistent with the rest of the app’s reusable component pattern.
+
+3. Tighten the event filtering types in Event.ts or locally in the screen by introducing a category type alias, so the selected category is not just a loose string. That is a consistency and maintainability improvement, not a behavior change.
+
+4. Normalize the screen layout styles in HomeScreenStyles.tsx by grouping filter-related styles together and keeping names aligned with the UI roles they serve. This matches the existing “screen + style module” structure in the project.
+
+5. Replace ad hoc inline logic in the list render path with clearly named derived values (`categories`, `filteredEvents`, `isEmptyState`), so the JSX stays declarative and easier to scan.
+
+If you approve this direction, I’ll implement it without changing app behavior.
+```
+
+## XI.6. Documentation and Version Control
+
+### XI.6.1. Goal: finish the change like in a real project: with a short documentation and a commit
+
+### XI.6.2. Last prompt in the Copilot window
+
+```md
+Based on the diff, generate a short description of the changes for the commit and pull request.
+Use the format:
+- What was changed?
+- How was it tested?
+- Risks / limitations.
+```
+
+### XI.6.3. Output from AI
+
+```md
+Optimized tool selection## Commit & PR Description
+
+**What was changed?**
+
+Added search and category filtering to the Home screen event list without changing navigation or adding external dependencies.
+
+- New local state for `searchQuery` and `selectedCategory` in HomeScreen.tsx.
+- Derived `categories` and `filteredEvents` using `useMemo` to avoid re-filtering on every render.
+- Added a TextInput for searching by event title or description.
+- Added category filter buttons that dynamically populate from the event data.
+- Added an empty state message when no events match the filters.
+- Added corresponding styles in HomeScreenStyles.tsx for the search input, category buttons, and empty state.
+
+All changes marked with `<XI.3.2.>` / `</XI.3.2.>` comments to match project annotation style.
+
+**How was it tested?**
+
+Manual testing in the Expo app:
+- Type in the search field and verify the list narrows to matching titles and descriptions.
+- Click category filter buttons and confirm only events in that category display.
+- Clear the search field and verify the full list restores.
+- Verify that tapping an event from filtered results still navigates to the Details screen with correct data.
+- Verify the empty state message appears when no results match.
+
+No changes to navigation or component contracts, so existing features remain unaffected.
+
+**Risks / limitations**
+
+- Search only checks `title` and `description` fields; does not search `speaker`, `location`, or `category` name. If broader search scope is needed later, the filter logic in HomeScreen.tsx will need expansion.
+- Filter logic is screen-local. If other list screens need similar filtering, this logic will need to be extracted to a shared utility or custom hook to avoid duplication.
+- Category selector is read-only from the event data; it assumes all events have a valid category. If category values become nullable or inconsistent, the category derivation may fail silently or produce unexpected behavior.
+```
+
+## XI.7. Manual Testing
+
+### XI.7.1. Run the application
+
+```bash
+npm start
+```
+
+* In Metro Bundler press "a" to open the application.
+
+### XI.7.2. Check the Home screen for the search input
+
+* The search input should be visible above the list of events.
+* Typing in the search input should filter the list of events in real-time, showing only events whose title or description includes the search query (case-insensitive).
+* Clearing the search input should restore the full list of events.
+
+### XI.7.3. Check the Home screen for category filter buttons
+
+* Category buttons should be visible below the search input, with one button per category plus an "All" button.
+* After clicking a category button, only events from that category should be visible in the list.
+* Clicking the "All" button should show all events again, regardless of category.
+* Verifying that the rest of the application works without changes.
+
+### XI.7.4. Commit the changes
+
+```bash
+git add .
+git commit -m "Add search and category filtering"
+```
+
+## End of Project Thank you for following along

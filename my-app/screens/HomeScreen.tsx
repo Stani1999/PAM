@@ -1,6 +1,6 @@
 // Lab III.2.2.
 // <VI.1.4.>
-import { useState } from "react";                           
+import { useMemo, useState } from "react";                  // <[Manual in XI.3.4.]<XI.3.2./>  <VI.2.6./>/>
 // import AddEventForm from "../components/AddEventForm";   <VI.2.6./>
 // </VI.1.4.>    
 import { EventItem } from "../types/Event";                 // <V.1.5./> 
@@ -13,7 +13,7 @@ import ListItem from "../components/ListItem";              // <IV.1.2./>
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/Navigation";
 // </III.5.1.>
-import { View, Text, FlatList, Button } from "react-native"; // <VI.2.6./> <IV.1.2./> 
+import { View, Text, FlatList, Button, TextInput, Pressable } from "react-native"; // <[Manual in XI.3.4.] </XI.3.2./>/> <VI.2.6./> <IV.1.2./> 
 import { styles } from "../styles/HomeScreenStyles";
 
 // <III.5.1.>
@@ -38,6 +38,10 @@ type HomeScreenProps = {
 export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.1./>
   // <VI.1.4.>
   const [events, setEvents] = useState<EventItem[]>(initialEvents);
+  // <XI.3.2.>
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  // </XI.3.2.>
 
   const addEvent = (newEvent: Omit<EventItem, "eventId">) => {
   const eventToAdd: EventItem = {
@@ -48,6 +52,28 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
     setEvents((prevEvents) => [eventToAdd, ...prevEvents]);
   };
   // <VI.1.4./>
+
+  // <XI.3.2.>
+  const categories = useMemo(() => {
+    return ["All", ...new Set(events.map((event) => event.category))];
+  }, [events]);
+
+  const filteredEvents = useMemo(() => {
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+
+    return events.filter((event) => {
+      const matchesQuery =
+        normalizedQuery.length === 0 ||
+        event.title.toLowerCase().includes(normalizedQuery) ||
+        event.description.toLowerCase().includes(normalizedQuery);
+
+      const matchesCategory =
+        selectedCategory === "All" || event.category === selectedCategory;
+
+      return matchesQuery && matchesCategory;
+    });
+  }, [events, searchQuery, selectedCategory]);
+  // </XI.3.2.>
 
 // // <IV.1.2.>
 //   const events: EventItem[] = [
@@ -76,6 +102,40 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Events</Text>
+      {/* <XI.3.2.> */}
+      <TextInput
+        placeholder="Search by name or description"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        style={styles.searchInput}
+      />
+
+      <View style={styles.categoryRow}>
+        {categories.map((category) => {
+          const isSelected = selectedCategory === category;
+
+          return (
+            <Pressable
+              key={category}
+              onPress={() => setSelectedCategory(category)}
+              style={[
+                styles.categoryButton,
+                isSelected && styles.categoryButtonSelected,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.categoryButtonText,
+                  isSelected && styles.categoryButtonTextSelected,
+                ]}
+              >
+                {category}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      {/* </XI.3.2.> */}
       
       {/*
       <VI.2.6.>
@@ -127,7 +187,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) { // <III.5.
       {/* </X.4.4.> */}
 
       <FlatList
-          data={events}
+          // <[Manual in XI.3.4.]<XI.3.2./>
+          data={filteredEvents}
+          ListEmptyComponent={
+            <Text style={styles.emptyStateText}>No events match your search or category.</Text>
+          }
+          // <[Manual in XI.3.4.]<XI.3.2./>
           keyExtractor={(item) => item.eventId.toString()}
           renderItem={({ item }: { item: EventItem }) => ( // <V.1.5./>
             <ListItem
